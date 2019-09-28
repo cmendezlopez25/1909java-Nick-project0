@@ -1,6 +1,7 @@
 package com.revature.services;
 
 public interface Menu {
-	public void Entry();
-	public void Exit();
+	public void entry();
+	public void display();
+	public void exit();
 }
