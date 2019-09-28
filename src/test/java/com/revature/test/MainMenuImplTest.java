@@ -12,6 +12,7 @@ import com.revature.services.CustomerMenuImpl;
 import com.revature.services.LoginMenuImpl;
 import com.revature.services.MainMenuImpl;
 import com.revature.services.Menu;
+import com.revature.services.RegisterUserMenuImpl;
 
 public class MainMenuImplTest {
 	private Menu mainMenuImpl;
@@ -39,7 +40,12 @@ public class MainMenuImplTest {
 	}
 
 	@Test
-	public void goIntoCustomerMenu() {
-		assertEquals("Menu should go to Customer Menu", CustomerMenuImpl.customerMenu, mainMenuImpl.display());
+	public void goIntoLoginrMenu() {
+		assertEquals("Menu should go to Customer Menu", LoginMenuImpl.loginMenu, mainMenuImpl.display());
+	}
+	
+	@Test
+	public void goIntoRegisterMenu() {
+		assertEquals("Menu should go to the Register Menu", RegisterUserMenuImpl.registerMenu, mainMenuImpl.display());
 	}
 }
