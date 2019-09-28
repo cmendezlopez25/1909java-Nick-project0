@@ -1,22 +1,15 @@
 package com.revature.services;
 
 public class EmployeeMenuImpl implements EmployeeMenu {
-
-	@Override
-	public void entry() {
-		// TODO Auto-generated method stub
-
+	//singleton
+	public static final EmployeeMenuImpl employeeMenu = new EmployeeMenuImpl();
+	
+	private EmployeeMenuImpl() {
+		
 	}
 	
 	@Override
-	public void display() {
-		
+	public Menu display() {
+		return null;
 	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,22 +1,15 @@
 package com.revature.services;
 
 public class CustomerMenuImpl implements CustomerMenu {
-
-	@Override
-	public void entry() {
-		// TODO Auto-generated method stub
-
+	//singleton
+	public static final Menu customerMenu = new CustomerMenuImpl();
+	
+	private CustomerMenuImpl() {
+		
 	}
 	
 	@Override
-	public void display() {
-		
+	public Menu display() {
+		return null;
 	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

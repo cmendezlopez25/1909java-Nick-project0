@@ -1,25 +1,27 @@
 package com.revature.services;
 
-import java.util.Scanner;
+import static com.revature.util.SystemUtil.scanner;
+import static com.revature.util.SystemUtil.sysout;
+import static com.revature.util.LoggerUtil.log;
 
 public class LoginMenuImpl implements LoginMenu {
-
-	@Override
-	public void entry() {
-		// TODO Auto-generated method stub
-		display();
+	//singleton
+	public static Menu loginMenu = new LoginMenuImpl();
+	
+	private LoginMenuImpl() {
+		
 	}
 	
 	@Override
-	public void display() {
-		System.out.println("Welcome to Cars Incorporated! We have cars, you do too!");
-		System.out.println("For customers or employees, press 1");
-		System.out.println("For new users looking to register, press 2");
+	public Menu display() {
+		log.trace("Inside Login Menu");
+		
+		
+		log.trace("Exiting Login Menu");
+		return null;
 	}
-
-	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-
+	
+	private boolean isValidInput(String message) {
+		return false;
 	}
 }

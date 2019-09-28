@@ -3,7 +3,7 @@ package com.revature.util;
 import org.apache.log4j.Logger;
 
 public class LoggerUtil {
-	private static Logger log = Logger.getRootLogger();
+	public static Logger log = Logger.getRootLogger();
 
 	public static void fatal(String message) {
 		log.fatal(message);

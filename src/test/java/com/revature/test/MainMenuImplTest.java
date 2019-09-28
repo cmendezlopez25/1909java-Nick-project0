@@ -8,10 +8,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.revature.services.CustomerMenuImpl;
 import com.revature.services.LoginMenuImpl;
+import com.revature.services.MainMenuImpl;
+import com.revature.services.Menu;
 
-public class LoginMenuImplTest {
-	private LoginMenuImpl loginImpl;
+public class MainMenuImplTest {
+	private Menu mainMenuImpl;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -23,7 +26,7 @@ public class LoginMenuImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		loginImpl = new LoginMenuImpl();
+		mainMenuImpl = MainMenuImpl.mainMenu;
 	}
 
 	@After
@@ -31,8 +34,12 @@ public class LoginMenuImplTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void exitLoginMenu() {
+		assertEquals("Menu should exit", null, mainMenuImpl.display());
 	}
 
+	@Test
+	public void goIntoCustomerMenu() {
+		assertEquals("Menu should go to Customer Menu", CustomerMenuImpl.customerMenu, mainMenuImpl.display());
+	}
 }
