@@ -9,7 +9,7 @@ public class LoginMenuImpl implements LoginMenu {
 	public static Menu loginMenu = new LoginMenuImpl();
 	
 	private LoginMenuImpl() {
-		
+		log.trace("Creating Login Menu");
 	}
 	
 	@Override
