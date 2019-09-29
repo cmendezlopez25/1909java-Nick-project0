@@ -1,6 +1,7 @@
 package com.revature.pojo;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.revature.services.LoginMenuImpl;
 import com.revature.services.Menu;
@@ -11,8 +12,8 @@ public class System {
 	private Menu currentMenu;
 	private User user;
 	private Lot lot;
-	private HashMap<String, Payment> allPaymentsByUsername;
-	private HashMap<String, Offer> allOffersByUsername;
+	private List<Payment> allPayments;
+	private List<Offer> allOffers;
 	
 	private System() {
 		setCurrentMenu(LoginMenuImpl.loginMenu);
@@ -46,20 +47,20 @@ public class System {
 		this.lot = lot;
 	}
 
-	public HashMap<String, Payment> getPayments() {
-		return allPaymentsByUsername;
+	public List<Payment> getPayments() {
+		return allPayments;
 	}
 
-	public void setPayments(HashMap<String, Payment> allPaymentsByUsername) {
-		this.allPaymentsByUsername = allPaymentsByUsername;
+	public void setPayments(List<Payment> allPayments) {
+		this.allPayments = allPayments;
 	}
 
-	public HashMap<String, Offer> getOffers() {
-		return allOffersByUsername;
+	public List<Offer> getOffers() {
+		return allOffers;
 	}
 
-	public void setOffers(HashMap<String, Offer> allOffersByUsername) {
-		this.allOffersByUsername = allOffersByUsername;
+	public void setOffers(List<Offer> allOffers) {
+		this.allOffers = allOffers;
 	}
 	
 	
