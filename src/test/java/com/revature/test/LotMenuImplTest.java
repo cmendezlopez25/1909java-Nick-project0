@@ -3,6 +3,8 @@ package com.revature.test;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,6 +16,8 @@ import com.revature.services.EmployeeMenuImpl;
 import com.revature.services.LotMenuImpl;
 import com.revature.dao.LotDAOSerialization;
 import com.revature.pojo.User;
+import com.revature.pojo.Car;
+import com.revature.pojo.Customer;
 import com.revature.pojo.Lot;
 import com.revature.pojo.System;
 
@@ -46,6 +50,9 @@ public class LotMenuImplTest {
 		lotMenu = LotMenuImpl.lotMenu;
 		user = new User();
 		lot = new Lot();
+		lot.setCars(new ArrayList<Car>());
+		lot.getCars().add(new Car("VIN number thing", "Toyota", 1994, new Customer()));
+		lot.getCars().add(new Car("Another VIN", "Ferrari", 1991, new Customer()));
 	}
 
 	@After
@@ -62,6 +69,7 @@ public class LotMenuImplTest {
 		assertEquals("Should enter Customer Menu", CustomerMenuImpl.customerMenu, lotMenu.display());
 	}
 
+	@Test
 	public void enterEmployeeMenu() {
 		user.setAccessLevel(User.AccessLevel.EMPLOYEE);
 		when(menuSystem.getUser()).thenReturn(user);
@@ -71,6 +79,7 @@ public class LotMenuImplTest {
 		assertEquals("Should enter Employee Menu", EmployeeMenuImpl.employeeMenu, lotMenu.display());
 	}
 	
+	@Test
 	public void reenterLotMenuEmployee() {
 		user.setAccessLevel(User.AccessLevel.EMPLOYEE);
 		when(menuSystem.getUser()).thenReturn(user);
@@ -80,6 +89,7 @@ public class LotMenuImplTest {
 		assertEquals("Should re-enter Lot Menu only if Employee", lotMenu, lotMenu.display());
 	}
 	
+	@Test
 	public void reenterLotMenuCustomer() {
 		user.setAccessLevel(User.AccessLevel.CUSTOMER);
 		when(menuSystem.getUser()).thenReturn(user);

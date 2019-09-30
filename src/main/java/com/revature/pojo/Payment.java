@@ -12,7 +12,7 @@ public class Payment {
 	public void setTotalPayment(double totalPayment) {
 		double roundedPayment = totalPayment * 100;
 		roundedPayment = Math.round(roundedPayment);
-		this.totalPayment = roundedPayment / 100;
+		this.totalPayment = roundedPayment / 100.0;
 	}
 
 	public int getMonths() {
