@@ -6,8 +6,10 @@ import java.util.List;
 import com.revature.services.LoginMenuImpl;
 import com.revature.services.Menu;
 
+import com.revature.dao.*;
+
 public class System {
-	//singleton
+	// singleton
 	public static final System menuSystem = new System();
 	private Menu currentMenu;
 	private User user;
@@ -15,6 +17,11 @@ public class System {
 	private List<Payment> allPayments;
 	private List<Offer> allOffers;
 	
+	private LotDAOSerialization lotSerializer = LotDAOSerialization.lotSerializer;
+	private PaymentDAOSerialization paymentSerializer = PaymentDAOSerialization.paymentSerializer;
+	private UserDAOSerialization userSerializer = UserDAOSerialization.userSerializer;
+	private OfferDAOSerialization offerSerializer = OfferDAOSerialization.offerSerializer;
+
 	private System() {
 		setCurrentMenu(LoginMenuImpl.loginMenu);
 		setUser(null);
@@ -62,6 +69,45 @@ public class System {
 	public void setOffers(List<Offer> allOffers) {
 		this.allOffers = allOffers;
 	}
+
+	public void addCarToLot(Car c) {
+		getLot().getCars().add(c);
+		lotSerializer.CreateLotFile(lot, "Lot");
+	}
 	
+	public boolean removeCarFromLot(Car c) {
+		if (getLot().getCars().contains(c)) {
+			getLot().getCars().remove(c);
+			lotSerializer.CreateLotFile(lot, "Lot");
+			return true;
+		}
+		
+		return false;
+	}
 	
+	public void addPayment(Payment p) {
+		getPayments().add(p);
+		paymentSerializer.CreatePaymentFile(getPayments(), "AllPayments");
+	}
+	
+	public void calculatePayment(Payment p) {
+		
+	}
+	
+	public void addOffer(Offer o) {
+		getOffers().add(o);
+		offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
+	}
+	
+	public void rejectAllOffersOfVin(String vin) {
+		// TODO
+		for (int i = 0; i < getOffers().size(); ++i) {
+			
+		}
+	}
+	
+	public void createNewUser(User u) {
+		userSerializer.CreateUser(u);
+		setUser(u);
+	}
 }

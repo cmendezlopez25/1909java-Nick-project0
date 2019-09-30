@@ -5,7 +5,6 @@ import static com.revature.util.SystemUtil.sysout;
 
 import com.revature.dao.LotDAOSerialization;
 import com.revature.pojo.Car;
-import com.revature.pojo.Lot;
 import com.revature.pojo.System;
 
 public class LotServiceImpl implements LotService {
@@ -23,7 +22,7 @@ public class LotServiceImpl implements LotService {
 			throw new NullPointerException();
 		}
 		
-		lotSerializer.CreateLotFile(System.menuSystem.getLot(), "Lot");
+		System.menuSystem.addCarToLot(c);
 		
 		log.trace("Exiting addCarToLot");
 	}
@@ -35,9 +34,7 @@ public class LotServiceImpl implements LotService {
 			log.error("Car doesn't exist!");
 		}
 		
-		if (System.menuSystem.getLot().getCars().contains(c)) {
-			System.menuSystem.getLot().getCars().remove(c);
-			lotSerializer.CreateLotFile(System.menuSystem.getLot(), "Lot");
+		if (System.menuSystem.removeCarFromLot(c)) {
 			sysout.println("Removed " + c.getVin() + " from Lot");
 			log.trace("Exiting removeCarFromLot");
 			return true;
