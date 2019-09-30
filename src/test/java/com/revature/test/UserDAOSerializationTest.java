@@ -3,7 +3,6 @@ package com.revature.test;
 import static org.junit.Assert.*;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -14,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.revature.dao.UserDAOSerialization;
-import com.revature.pojo.Car;
 import com.revature.pojo.User;
 import com.revature.pojo.User.AccessLevel;
 

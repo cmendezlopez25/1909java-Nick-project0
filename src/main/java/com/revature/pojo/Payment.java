@@ -1,9 +1,11 @@
 package com.revature.pojo;
 
-public class Payment {
+import java.io.Serializable;
+
+public class Payment implements Serializable {
 	private double totalPayment;
 	private int months;
-	private Customer owner;
+	private String ownerUsername;
 
 	public double getTotalPayment() {
 		return totalPayment;
@@ -23,31 +25,31 @@ public class Payment {
 		this.months = months;
 	}
 
-	public Customer getOwner() {
-		return owner;
+	public String getOwnerUsername() {
+		return ownerUsername;
 	}
 
-	public void setOwner(Customer owner) {
-		this.owner = owner;
+	public void setOwnerUsername(String ownerUsername) {
+		this.ownerUsername = ownerUsername;
 	}
 	
 	public Payment() {
 		super();
 	}
 
-	public Payment(double totalPayment, int months, Customer owner) {
+	public Payment(double totalPayment, int months, String ownerUsername) {
 		super();
-		setTotalPayment(totalPayment);
-		setMonths(months);
-		setOwner(owner);
+		this.totalPayment = totalPayment;
+		this.months = months;
+		this.ownerUsername = ownerUsername;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + months;
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + ((ownerUsername == null) ? 0 : ownerUsername.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(totalPayment);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -65,10 +67,10 @@ public class Payment {
 		Payment other = (Payment) obj;
 		if (months != other.months)
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		if (ownerUsername == null) {
+			if (other.ownerUsername != null)
 				return false;
-		} else if (!owner.equals(other.owner))
+		} else if (!ownerUsername.equals(other.ownerUsername))
 			return false;
 		if (Double.doubleToLongBits(totalPayment) != Double.doubleToLongBits(other.totalPayment))
 			return false;
@@ -77,8 +79,7 @@ public class Payment {
 
 	@Override
 	public String toString() {
-		return "Payment [totalPayment=" + totalPayment + ", months=" + months + ", owner=" + owner + "]";
+		return "Payment [totalPayment=" + totalPayment + ", months=" + months + ", ownerUsername=" + ownerUsername
+				+ "]";
 	}
-	
-	
 }
