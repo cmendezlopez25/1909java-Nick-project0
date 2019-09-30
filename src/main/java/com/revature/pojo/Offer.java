@@ -1,13 +1,15 @@
 package com.revature.pojo;
 
-public class Offer {
+import java.io.Serializable;
+
+public class Offer implements Serializable {
 	public static enum OfferStatus {
 		PENDING, REJECTED, ACCEPTED;
 	}
 
 	private OfferStatus offerStatus;
 	private double moneyAmount;
-	private User owner;
+	private String ownerUsername;
 
 	public OfferStatus getOfferStatus() {
 		return offerStatus;
@@ -27,23 +29,23 @@ public class Offer {
 		this.moneyAmount = rounded;
 	}
 
-	public User getOwner() {
-		return owner;
+	public String getOwner() {
+		return ownerUsername;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setOwner(String ownerUsername) {
+		this.ownerUsername = ownerUsername;
 	}
-	
+
 	public Offer() {
 		super();
 	}
 
-	public Offer(OfferStatus offerStatus, double moneyAmount, User owner) {
+	public Offer(OfferStatus offerStatus, double moneyAmount, String ownerUsername) {
 		super();
 		this.offerStatus = offerStatus;
 		setMoneyAmount(moneyAmount);
-		this.owner = owner;
+		this.ownerUsername = ownerUsername;
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class Offer {
 		temp = Double.doubleToLongBits(moneyAmount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((offerStatus == null) ? 0 : offerStatus.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + ((ownerUsername == null) ? 0 : ownerUsername.hashCode());
 		return result;
 	}
 
@@ -71,16 +73,17 @@ public class Offer {
 			return false;
 		if (offerStatus != other.offerStatus)
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		if (ownerUsername == null) {
+			if (other.ownerUsername != null)
 				return false;
-		} else if (!owner.equals(other.owner))
+		} else if (!ownerUsername.equals(other.ownerUsername))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Offer [offerStatus=" + offerStatus + ", moneyAmount=" + moneyAmount + ", owner=" + owner + "]";
+		return "Offer [offerStatus=" + offerStatus + ", moneyAmount=" + moneyAmount + ", ownerUsername=" + ownerUsername
+				+ "]";
 	}
 }

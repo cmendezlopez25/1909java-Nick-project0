@@ -45,7 +45,7 @@ public class PaymentDAOSerialization implements PaymentDAO {
 	}
 
 	@Override
-	public List<Payment> ReadAllPaymentFiles(String filename) {
+	public List<Payment> ReadAllPaymentsFile(String filename) {
 		if (filename == null) {
 			log.error("Filename is null!");
 			throw new NullPointerException();

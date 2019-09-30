@@ -77,16 +77,16 @@ public class PaymentDAOSerializationTest {
 	
 	@Test(expected=NullPointerException.class)
 	public void readNull() {
-		paymentSerializer.ReadAllPaymentFiles(null);
+		paymentSerializer.ReadAllPaymentsFile(null);
 	}
 	
 	@Test
 	public void readPaymentFile() {
-		assertEquals("Should be the same list", paymentList, paymentSerializer.ReadAllPaymentFiles("AllPayments"));
+		assertEquals("Should be the same list", paymentList, paymentSerializer.ReadAllPaymentsFile("AllPayments"));
 	}
 	
 	@Test
 	public void readNotFoundFile() {
-		assertEquals("Should be a new list of 0", new ArrayList<Payment>(), paymentSerializer.ReadAllPaymentFiles("notfound"));
+		assertEquals("Should be a new list of 0", new ArrayList<Payment>(), paymentSerializer.ReadAllPaymentsFile("notfound"));
 	}
 }

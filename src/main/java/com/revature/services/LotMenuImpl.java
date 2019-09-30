@@ -153,8 +153,7 @@ public class LotMenuImpl implements LotMenu {
 			}
 		}
 		
-		
-		offer = new Offer(OfferStatus.PENDING, input, user);
+		offer = new Offer(OfferStatus.PENDING, input, user.getUsername());
 		
 		log.trace("Exiting makeOffer");
 		return offer;
