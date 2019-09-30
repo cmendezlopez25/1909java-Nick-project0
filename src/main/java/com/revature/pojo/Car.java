@@ -1,10 +1,12 @@
 package com.revature.pojo;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable {
 	private String vin;
 	private String model;
 	private int year;
-	private Customer owner;
+	private String ownerUsername;
 
 	public String getVin() {
 		return vin;
@@ -30,24 +32,24 @@ public class Car {
 		this.year = year;
 	}
 
-	public Customer getOwner() {
-		return owner;
+	public String getOwner() {
+		return ownerUsername;
 	}
 
-	public void setOwner(Customer owner) {
-		this.owner = owner;
+	public void setOwner(String ownerUsername) {
+		this.ownerUsername = ownerUsername;
 	}
-	
+
 	public Car() {
 		super();
 	}
 
-	public Car(String vin, String model, int year, Customer owner) {
+	public Car(String vin, String model, int year, String ownerUsername) {
 		super();
 		this.vin = vin;
 		this.model = model;
 		this.year = year;
-		this.owner = owner;
+		this.ownerUsername = ownerUsername;
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class Car {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + ((ownerUsername == null) ? 0 : ownerUsername.hashCode());
 		result = prime * result + ((vin == null) ? 0 : vin.hashCode());
 		result = prime * result + year;
 		return result;
@@ -75,10 +77,10 @@ public class Car {
 				return false;
 		} else if (!model.equals(other.model))
 			return false;
-		if (owner == null) {
-			if (other.owner != null)
+		if (ownerUsername == null) {
+			if (other.ownerUsername != null)
 				return false;
-		} else if (!owner.equals(other.owner))
+		} else if (!ownerUsername.equals(other.ownerUsername))
 			return false;
 		if (vin == null) {
 			if (other.vin != null)
@@ -92,6 +94,6 @@ public class Car {
 
 	@Override
 	public String toString() {
-		return "Car [vin=" + vin + ", model=" + model + ", year=" + year + ", owner=" + owner + "]";
+		return "Car [vin=" + vin + ", model=" + model + ", year=" + year + ", ownerUsername=" + ownerUsername + "]";
 	}
 }
