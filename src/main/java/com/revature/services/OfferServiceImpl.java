@@ -20,6 +20,18 @@ public class OfferServiceImpl implements OfferService {
 	}
 
 	@Override
+	public void acceptOffer(Offer offer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void rejectOffer(Offer offer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public List<Offer> retrievePendingOffers() {
 		// TODO Auto-generated method stub
 		return null;
@@ -30,17 +42,4 @@ public class OfferServiceImpl implements OfferService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public void acceptOffer(Offer offer) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void rejectOffer(Offer offer) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
