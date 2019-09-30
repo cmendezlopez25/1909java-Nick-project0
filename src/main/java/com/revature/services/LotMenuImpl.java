@@ -74,7 +74,7 @@ public class LotMenuImpl implements LotMenu {
 				System.menuSystem.setCurrentMenu(lotMenu);
 				if (user.getAccessLevel() == AccessLevel.CUSTOMER) {
 					Offer offer = makeOffer();
-					offerService.AddOffer(makeOffer());
+					offerService.addOffer(makeOffer());
 					sysout.println("You made an offer of $" + offer.getMoneyAmount() + "!");
 				}
 				else {

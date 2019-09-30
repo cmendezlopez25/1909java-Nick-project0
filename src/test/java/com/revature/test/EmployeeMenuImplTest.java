@@ -16,11 +16,12 @@ import com.revature.services.EmployeeMenuImpl;
 import com.revature.services.LoginMenuImpl;
 import com.revature.services.LotMenuImpl;
 import com.revature.services.MainMenuImpl;
-import com.revature.services.OfferMenuImpl;
 import com.revature.pojo.Customer;
 import com.revature.pojo.Employee;
+import com.revature.pojo.Offer;
 import com.revature.pojo.Payment;
 import com.revature.pojo.System;
+import com.revature.pojo.Offer.OfferStatus;
 import com.revature.pojo.User.AccessLevel;
 
 import org.junit.runner.RunWith;
@@ -60,8 +61,17 @@ public class EmployeeMenuImplTest {
 		payments.add(new Payment(44.44, 24, new Customer()));
 		payments.add(new Payment(3.8923, 24, new Customer()));
 		
+		List<Offer> offers = new ArrayList<Offer>();
+		offers.add(new Offer(OfferStatus.PENDING, 12345.0, new Customer()));
+		offers.add(new Offer(OfferStatus.ACCEPTED, 444.999, new Customer()));
+		offers.add(new Offer(OfferStatus.REJECTED, 0123.04, new Customer()));
+		offers.add(new Offer(OfferStatus.PENDING, 9999.55, new Customer()));
+		offers.add(new Offer(OfferStatus.PENDING, 12394.0, new Customer()));
+		offers.add(new Offer(OfferStatus.PENDING, 7.0, new Customer()));
+		
 		when(menuSystem.getUser()).thenReturn(employee);
 		when(menuSystem.getPayments()).thenReturn(payments);
+		when(menuSystem.getOffers()).thenReturn(offers);
 		employeeMenu.setMenuSystem(menuSystem);
 	}
 
@@ -82,11 +92,6 @@ public class EmployeeMenuImplTest {
 	@Test
 	public void enterMainMenu() {
 		assertEquals("Should enter Main Menu", MainMenuImpl.mainMenu, employeeMenu.display());
-	}
-
-	@Test
-	public void enterOfferMenu() {
-		assertEquals("Should enter Offer Menu", OfferMenuImpl.offerMenu, employeeMenu.display());
 	}
 
 	@Test

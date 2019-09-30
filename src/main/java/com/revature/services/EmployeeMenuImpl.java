@@ -5,6 +5,7 @@ import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 
 import com.revature.pojo.Employee;
+import com.revature.pojo.Offer;
 import com.revature.pojo.System;
 
 public class EmployeeMenuImpl implements EmployeeMenu {
@@ -12,6 +13,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 	public static final EmployeeMenuImpl employeeMenu = new EmployeeMenuImpl();
 	private Employee currentUser = null;
 	private System menuSystem = System.menuSystem;
+	private OfferServiceImpl offerService = new OfferServiceImpl();
 	
 	private EmployeeMenuImpl() {
 		log.trace("Creating Employee Menu");
@@ -45,7 +47,8 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 				break;
 
 			case 2:
-				System.menuSystem.setCurrentMenu(OfferMenuImpl.offerMenu);
+				displayOffers();
+				System.menuSystem.setCurrentMenu(employeeMenu);
 				break;
 
 			case 3:
@@ -100,6 +103,81 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 			}
 		}
 		log.trace("Exiting displayPayments");
+	}
+	
+	private void displayOffers() {
+		log.trace("Entering displayOffers");
+		if (menuSystem.getOffers() == null || menuSystem.getOffers().size() == 0) {
+			sysout.println("There are no offers.");
+		}
+		else {
+			for (int i = 0; i < menuSystem.getOffers().size(); ++i) {
+				sysout.println((i+1) + ". " + menuSystem.getOffers().get(i).toString());
+			}
+			sysout.println("Select an offer to accept or reject, or press c to cancel.");
+			validOfferInput();
+		}
+		
+		log.trace("Exiting displayOffers");
+	}
+	
+	private void validOfferInput() {
+		log.trace("Entering validOfferInput");
+		
+		String input = "-1";
+		while (input.equals("-1")) {
+			if (scanner.hasNextInt()) {
+				input = scanner.next();
+				if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > menuSystem.getOffers().size()) {
+					input = "-1";
+				}
+			}
+			else {
+				input = scanner.next();
+				if (!input.toLowerCase().equals("c")) {
+					input = "-1";
+				}
+			}
+			
+			if (input.equals("-1")) {
+				sysout.println("Incorrect input. Try again.");
+			}
+		}
+		
+		if (!input.toLowerCase().equals("c")) {
+			Offer offer = menuSystem.getOffers().get(Integer.parseInt(input) -1);
+			sysout.println("Press a to accept or r to reject offer: " + offer);
+			acceptRejectOffer(offer);
+		}
+		
+		log.trace("Exiting validOfferInput");
+	}
+	
+	private void acceptRejectOffer(Offer offer) {
+		log.trace("Entering acceptRejectOffers");
+		
+		String input = "-1";
+		while (input.equals("-1")) {
+			input = scanner.next();
+			
+			if (input.toLowerCase().equals("a")) {
+				offerService.acceptOffer(offer);
+				sysout.println("Accepted " + offer);
+			}
+			else if (input.toLowerCase().equals("r")) {
+				offerService.rejectOffer(offer);
+				sysout.println("Rejected " + offer);
+			}
+			else {
+				input = "-1";
+			}
+			
+			if (input.equals("-1")) {
+				sysout.println("Incorrect input. Try again.");
+			}
+		}
+		
+		log.trace("Exiting acceptRejectOffers");
 	}
 	
 	public void setMenuSystem(System menuSystem) {

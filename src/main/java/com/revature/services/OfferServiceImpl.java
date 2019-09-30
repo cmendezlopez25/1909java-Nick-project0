@@ -8,13 +8,13 @@ import com.revature.pojo.User;
 public class OfferServiceImpl implements OfferService {
 
 	@Override
-	public void AddOffer(Offer offer) {
+	public void addOffer(Offer offer) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean RemoveOffer(Offer offer) {
+	public boolean removeOffer(Offer offer) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -29,6 +29,18 @@ public class OfferServiceImpl implements OfferService {
 	public List<Offer> retrieveOffersFromUser(User u) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void acceptOffer(Offer offer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rejectOffer(Offer offer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
