@@ -53,15 +53,11 @@ public class LotServiceImplTest {
 
 	@Test
 	public void removeCarFromLotSuccess() {
-		when(lotSerializer.RemoveCarFromLot(car)).thenReturn(true);
-		lotService.setLotDAOSerializer(lotSerializer);
 		assertTrue("Car should exist.", lotService.removeCarFromLot(car));
 	}
 
 	@Test
 	public void removeCarFromLotFail() {
-		when(lotSerializer.RemoveCarFromLot(car)).thenReturn(false);
-		lotService.setLotDAOSerializer(lotSerializer);
 		assertFalse("Car should not exist.", lotService.removeCarFromLot(car));
 	}
 }

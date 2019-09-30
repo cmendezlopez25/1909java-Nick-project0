@@ -31,7 +31,7 @@ public class LotMenuImpl implements LotMenu {
 		log.trace("Entering Lot Menu");
 		
 		if (lot == null) {
-			lot = lotSerializer.ReadLotFile();
+			lot = lotSerializer.ReadLotFile("Lot");
 			if (lot == null) {
 				lot = new Lot();
 			}

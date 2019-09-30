@@ -11,9 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.pojo.Customer;
 import com.revature.pojo.Offer;
-import com.revature.pojo.Payment;
 
 public class OfferDAOSerialization implements OfferDAO {
 	// singleton
@@ -25,6 +23,7 @@ public class OfferDAOSerialization implements OfferDAO {
 
 	@Override
 	public void CreateOfferFile(List<Offer> offerList, String filename) {
+		log.trace("Entering CreateOfferFile");
 		if (offerList == null || filename == null) {
 			log.error("Offer list does not exist!");
 			throw new NullPointerException();
@@ -42,10 +41,14 @@ public class OfferDAOSerialization implements OfferDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		log.trace("Exiting CreateOfferFile");
 	}
 
 	@Override
 	public List<Offer> ReadAllOffersFiles(String filename) {
+		log.trace("Entering ReadAllOffersFiles");
+		
 		if (filename == null) {
 			log.error("Filename is null!");
 			throw new NullPointerException();
@@ -61,6 +64,8 @@ public class OfferDAOSerialization implements OfferDAO {
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
 		}
+		
+		log.trace("Exiting ReadAllOffersFiles");
 		return offerList;
 	}
 

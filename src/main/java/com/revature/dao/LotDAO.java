@@ -4,7 +4,6 @@ import com.revature.pojo.Car;
 import com.revature.pojo.Lot;
 
 public interface LotDAO {
-	public void AddCarIntoLot(Car c);
-	public boolean RemoveCarFromLot(Car c);
-	public Lot ReadLotFile();
+	public void CreateLotFile(Lot lot, String filename);
+	public Lot ReadLotFile(String filename);
 }
