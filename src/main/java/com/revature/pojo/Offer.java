@@ -10,6 +10,7 @@ public class Offer implements Serializable {
 	private OfferStatus offerStatus;
 	private double moneyAmount;
 	private String ownerUsername;
+	private String carVin;
 
 	public OfferStatus getOfferStatus() {
 		return offerStatus;
@@ -29,29 +30,39 @@ public class Offer implements Serializable {
 		this.moneyAmount = rounded;
 	}
 
-	public String getOwner() {
+	public String getOwnerUsername() {
 		return ownerUsername;
 	}
 
-	public void setOwner(String ownerUsername) {
+	public void setOwnerUsername(String ownerUsername) {
 		this.ownerUsername = ownerUsername;
+	}
+	
+	public String getCarVin() {
+		return carVin;
+	}
+
+	public void setCarVin(String carVin) {
+		this.carVin = carVin;
 	}
 
 	public Offer() {
 		super();
 	}
 
-	public Offer(OfferStatus offerStatus, double moneyAmount, String ownerUsername) {
+	public Offer(OfferStatus offerStatus, double moneyAmount, String ownerUsername, String carVin) {
 		super();
 		this.offerStatus = offerStatus;
 		setMoneyAmount(moneyAmount);
 		this.ownerUsername = ownerUsername;
+		this.carVin = carVin;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((carVin == null) ? 0 : carVin.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(moneyAmount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -69,6 +80,11 @@ public class Offer implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Offer other = (Offer) obj;
+		if (carVin == null) {
+			if (other.carVin != null)
+				return false;
+		} else if (!carVin.equals(other.carVin))
+			return false;
 		if (Double.doubleToLongBits(moneyAmount) != Double.doubleToLongBits(other.moneyAmount))
 			return false;
 		if (offerStatus != other.offerStatus)
@@ -84,6 +100,6 @@ public class Offer implements Serializable {
 	@Override
 	public String toString() {
 		return "Offer [offerStatus=" + offerStatus + ", moneyAmount=" + moneyAmount + ", ownerUsername=" + ownerUsername
-				+ "]";
+				+ ", carVin=" + carVin + "]";
 	}
 }

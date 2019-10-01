@@ -11,5 +11,6 @@ public interface OfferService {
 	public void acceptOffer(Offer offer);
 	public void rejectOffer(Offer offer);
 	public List<Offer> retrievePendingOffers();
-	public List<Offer> retrieveOffersFromUser(User u);
+	public List<Offer> retrieveOffersFromUser(User u);;
+	public List<Offer> retrieveOffersFromVin(String vin);
 }

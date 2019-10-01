@@ -1,5 +1,6 @@
 package com.revature.pojo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import com.revature.services.LoginMenuImpl;
 import com.revature.services.Menu;
 
 import com.revature.dao.*;
+import com.revature.pojo.Offer.OfferStatus;
 
 public class System {
 	// singleton
@@ -76,8 +78,7 @@ public class System {
 	}
 	
 	public boolean removeCarFromLot(Car c) {
-		if (getLot().getCars().contains(c)) {
-			getLot().getCars().remove(c);
+		if (getLot().getCars().remove(c)) {
 			lotSerializer.CreateLotFile(lot, "Lot");
 			return true;
 		}
@@ -91,7 +92,7 @@ public class System {
 	}
 	
 	public void calculatePayment(Payment p) {
-		
+		// TODO
 	}
 	
 	public void addOffer(Offer o) {
@@ -99,11 +100,68 @@ public class System {
 		offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
 	}
 	
-	public void rejectAllOffersOfVin(String vin) {
-		// TODO
-		for (int i = 0; i < getOffers().size(); ++i) {
-			
+	public boolean removeOffer(Offer o) {
+		if  (getOffers().remove(o)) {
+			offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
+			return true;
 		}
+		
+		return false;
+	}
+	
+	public void acceptOffer(Offer o) {
+		if (getOffers().contains(o)) {
+			Offer offer = getOffers().get(getOffers().indexOf(o));
+			offer.setOfferStatus(OfferStatus.ACCEPTED);
+			
+			rejectAllOffersOfVin(offer.getCarVin());
+		}
+	}
+	
+	public void rejectOffer(Offer o) {
+		if (getOffers().contains(o)) {
+			Offer offer = getOffers().get(getOffers().indexOf(o));
+			offer.setOfferStatus(OfferStatus.REJECTED);
+		}
+	}
+	
+	public void rejectAllOffersOfVin(String vin) {
+		for (int i = 0; i < getOffers().size(); ++i) {
+			Offer offer = getOffers().get(i);
+			if (offer.getCarVin().equals(vin) && offer.getOfferStatus() == OfferStatus.PENDING) {
+				offer.setOfferStatus(OfferStatus.REJECTED);
+			}
+		}
+	}
+	
+	public List<Offer> retrievePendingOffers(){
+		List<Offer> offerList = new ArrayList<Offer>();
+		for (Offer offer : getOffers()) {
+			if (offer.getOfferStatus() == OfferStatus.PENDING) {
+				offerList.add(offer);
+			}
+		}
+		return offerList;
+	}
+	
+	public List<Offer> retrieveOffersFromUser(User u){
+		List<Offer> offerList = new ArrayList<Offer>();
+		for (Offer offer : getOffers()) {
+			if (offer.getOwnerUsername().equals(u.getUsername())) {
+				offerList.add(offer);
+			}
+		}
+		return offerList;
+	}
+	
+	public List<Offer> retrieveOffersFromVin(String vin){
+		List<Offer> offerList = new ArrayList<Offer>();
+		for (Offer offer : getOffers()) {
+			if (offer.getCarVin().equals(vin)) {
+				offerList.add(offer);
+			}
+		}
+		return offerList;
 	}
 	
 	public void createNewUser(User u) {

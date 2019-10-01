@@ -31,10 +31,7 @@ public class LotMenuImpl implements LotMenu {
 		log.trace("Entering Lot Menu");
 		
 		if (lot == null) {
-			lot = lotSerializer.ReadLotFile("Lot");
-			if (lot == null) {
-				lot = new Lot();
-			}
+			lot = menuSystem.getLot();
 		}
 		
 		user = menuSystem.getUser();
@@ -73,8 +70,8 @@ public class LotMenuImpl implements LotMenu {
 			default:
 				System.menuSystem.setCurrentMenu(lotMenu);
 				if (user.getAccessLevel() == AccessLevel.CUSTOMER) {
-					Offer offer = makeOffer();
-					offerService.addOffer(makeOffer());
+					Offer offer = makeOffer(lot.getCars().get(Integer.parseInt(input)).getVin());
+					offerService.addOffer(offer);
 					sysout.println("You made an offer of $" + offer.getMoneyAmount() + "!");
 				}
 				else {
@@ -131,7 +128,7 @@ public class LotMenuImpl implements LotMenu {
 		}
 	}
 	
-	private Offer makeOffer() {
+	private Offer makeOffer(String carVin) {
 		log.trace("Entering makeOffer");
 		
 		sysout.println("How much would you like to offer?");
@@ -153,7 +150,7 @@ public class LotMenuImpl implements LotMenu {
 			}
 		}
 		
-		offer = new Offer(OfferStatus.PENDING, input, user.getUsername());
+		offer = new Offer(OfferStatus.PENDING, input, user.getUsername(), carVin);
 		
 		log.trace("Exiting makeOffer");
 		return offer;

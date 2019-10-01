@@ -35,9 +35,9 @@ public class OfferDAOSerializationTest {
 	public void setUp() throws Exception {
 		offerSerializer = OfferDAOSerialization.offerSerializer;
 		offerList = new ArrayList<Offer>();
-		offerList.add(new Offer(OfferStatus.PENDING, 1234.99, "burrito"));
-		offerList.add(new Offer(OfferStatus.ACCEPTED, 133344.091, "human"));
-		offerList.add(new Offer(OfferStatus.ACCEPTED, 2.091, "human"));
+		offerList.add(new Offer(OfferStatus.PENDING, 1234.99, "burrito", "12345678912345678"));
+		offerList.add(new Offer(OfferStatus.ACCEPTED, 133344.091, "human", "12345678912345678"));
+		offerList.add(new Offer(OfferStatus.ACCEPTED, 2.091, "human", "12345678912345678"));
 	}
 
 	@After

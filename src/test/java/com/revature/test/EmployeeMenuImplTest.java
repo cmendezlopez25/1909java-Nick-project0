@@ -62,12 +62,12 @@ public class EmployeeMenuImplTest {
 		payments.add(new Payment(3.8923, 24, "burrito"));
 		
 		List<Offer> offers = new ArrayList<Offer>();
-		offers.add(new Offer(OfferStatus.PENDING, 12345.0, "burrito"));
-		offers.add(new Offer(OfferStatus.ACCEPTED, 444.999, "burrito"));
-		offers.add(new Offer(OfferStatus.REJECTED, 0123.04, "burrito"));
-		offers.add(new Offer(OfferStatus.PENDING, 9999.55, "human"));
-		offers.add(new Offer(OfferStatus.PENDING, 12394.0, "human"));
-		offers.add(new Offer(OfferStatus.PENDING, 7.0, "human"));
+		offers.add(new Offer(OfferStatus.PENDING, 12345.0, "burrito", "12345678912345678"));
+		offers.add(new Offer(OfferStatus.ACCEPTED, 444.999, "burrito", "12345678912345678"));
+		offers.add(new Offer(OfferStatus.REJECTED, 0123.04, "burrito", "12345678912345678"));
+		offers.add(new Offer(OfferStatus.PENDING, 9999.55, "human", "12345678912345678"));
+		offers.add(new Offer(OfferStatus.PENDING, 12394.0, "human", "12345678912345678"));
+		offers.add(new Offer(OfferStatus.PENDING, 7.0, "human", "12345678912345678"));
 		
 		when(menuSystem.getUser()).thenReturn(employee);
 		when(menuSystem.getPayments()).thenReturn(payments);
