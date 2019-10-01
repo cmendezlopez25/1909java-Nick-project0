@@ -1,6 +1,8 @@
 package com.revature.pojo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class System {
 	private Lot lot;
 	private List<Payment> allPayments;
 	private List<Offer> allOffers;
-	
+
 	private LotDAOSerialization lotSerializer = LotDAOSerialization.lotSerializer;
 	private PaymentDAOSerialization paymentSerializer = PaymentDAOSerialization.paymentSerializer;
 	private UserDAOSerialization userSerializer = UserDAOSerialization.userSerializer;
@@ -56,9 +58,9 @@ public class System {
 	public void setLot(Lot lot) {
 		if (lot != null) {
 			this.lot = lot;
-		}
-		else {
+		} else {
 			this.lot = new Lot();
+			this.lot.setCars(new ArrayList<Car>());
 		}
 	}
 
@@ -69,8 +71,7 @@ public class System {
 	public void setPayments(List<Payment> allPayments) {
 		if (allPayments != null) {
 			this.allPayments = allPayments;
-		}
-		else {
+		} else {
 			this.allPayments = new ArrayList<Payment>();
 		}
 	}
@@ -82,13 +83,25 @@ public class System {
 	public void setOffers(List<Offer> allOffers) {
 		if (allOffers != null) {
 			this.allOffers = allOffers;
-		}
-		else {
+		} else {
 			this.allOffers = new ArrayList<Offer>();
 		}
 	}
-	
-	public List<Car> retrieveCarsByUser(String username){
+
+	public Car retrieveCarFromLotByVin(String vin) {
+		Car car = null;
+		if (vin != null) {
+			for (Car c : getLot().getCars()) {
+				if (c.getVin().equals(vin)) {
+					car = c;
+					break;
+				}
+			}
+		}
+		return car;
+	}
+
+	public List<Car> retrieveCarsByUser(String username) {
 		List<Car> carList = new ArrayList<Car>();
 		for (Car car : getLot().getCars()) {
 			if (car.getOwner() != null && car.getOwner().equals(username)) {
@@ -102,26 +115,38 @@ public class System {
 		getLot().getCars().add(c);
 		lotSerializer.CreateLotFile(lot, "Lot");
 	}
-	
+
 	public boolean removeCarFromLot(Car c) {
 		if (getLot().getCars().remove(c)) {
 			lotSerializer.CreateLotFile(lot, "Lot");
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
+	public List<Car> retrieveUnownedCars() {
+		List<Car> carList = new ArrayList<Car>();
+		if (getLot().getCars() != null) {
+			for (Car car : getLot().getCars()) {
+				if (car.getOwner() == null) {
+					carList.add(car);
+				}
+			}
+		}
+		return carList;
+	}
+
 	public void addPayment(Payment p) {
 		getPayments().add(p);
 		paymentSerializer.CreatePaymentFile(getPayments(), "AllPayments");
 	}
-	
+
 	public void calculatePayment(Payment p) {
 		// TODO
 	}
-	
-	public List<Payment> retrievePaymentsFromUsername(User u){
+
+	public List<Payment> retrievePaymentsFromUsername(User u) {
 		List<Payment> paymentList = new ArrayList<Payment>();
 		for (Payment payment : getPayments()) {
 			if (payment.getOwnerUsername().equals(u.getUsername())) {
@@ -130,37 +155,42 @@ public class System {
 		}
 		return paymentList;
 	}
-	
+
 	public void addOffer(Offer o) {
 		getOffers().add(o);
 		offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
 	}
-	
+
 	public boolean removeOffer(Offer o) {
-		if  (getOffers().remove(o)) {
+		if (getOffers().remove(o)) {
 			offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	public void acceptOffer(Offer o) {
+
+	public void acceptOffer(Offer o, int months) {
 		if (getOffers().contains(o)) {
 			Offer offer = getOffers().get(getOffers().indexOf(o));
 			offer.setOfferStatus(OfferStatus.ACCEPTED);
-			
+
+			Car c = retrieveCarFromLotByVin(o.getCarVin());
+			c.setOwner(o.getOwnerUsername());
+			o.setCarVin(c.getVin());
+			addPayment(new Payment(o.getMoneyAmount(), months, o.getOwnerUsername()));
+
 			rejectAllOffersOfVin(offer.getCarVin());
 		}
 	}
-	
+
 	public void rejectOffer(Offer o) {
 		if (getOffers().contains(o)) {
 			Offer offer = getOffers().get(getOffers().indexOf(o));
 			offer.setOfferStatus(OfferStatus.REJECTED);
 		}
 	}
-	
+
 	public void rejectAllOffersOfVin(String vin) {
 		for (int i = 0; i < getOffers().size(); ++i) {
 			Offer offer = getOffers().get(i);
@@ -169,8 +199,8 @@ public class System {
 			}
 		}
 	}
-	
-	public List<Offer> retrievePendingOffers(){
+
+	public List<Offer> retrievePendingOffers() {
 		List<Offer> offerList = new ArrayList<Offer>();
 		for (Offer offer : getOffers()) {
 			if (offer.getOfferStatus() == OfferStatus.PENDING) {
@@ -179,8 +209,8 @@ public class System {
 		}
 		return offerList;
 	}
-	
-	public List<Offer> retrieveOffersFromUser(User u){
+
+	public List<Offer> retrieveOffersFromUser(User u) {
 		List<Offer> offerList = new ArrayList<Offer>();
 		for (Offer offer : getOffers()) {
 			if (offer.getOwnerUsername().equals(u.getUsername())) {
@@ -189,8 +219,8 @@ public class System {
 		}
 		return offerList;
 	}
-	
-	public List<Offer> retrieveOffersFromVin(String vin){
+
+	public List<Offer> retrieveOffersFromVin(String vin) {
 		List<Offer> offerList = new ArrayList<Offer>();
 		for (Offer offer : getOffers()) {
 			if (offer.getCarVin().equals(vin)) {
@@ -199,7 +229,7 @@ public class System {
 		}
 		return offerList;
 	}
-	
+
 	public void createNewUser(User u) {
 		userSerializer.CreateUser(u);
 		setUser(u);

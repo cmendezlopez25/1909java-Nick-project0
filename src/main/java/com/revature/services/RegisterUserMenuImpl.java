@@ -7,6 +7,7 @@ import static com.revature.util.LoggerUtil.log;
 import com.revature.dao.UserDAOSerialization;
 import com.revature.pojo.System;
 import com.revature.pojo.User;
+import com.revature.pojo.User.AccessLevel;
 
 public class RegisterUserMenuImpl implements RegisterUserMenu {
 	// singleton
@@ -38,7 +39,9 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 			sysout.println("Enter your password");
 			user.setPassword(scanner.next());
 			sysout.println("User creation is successful! Enjoy your new account!");
+			user.setAccessLevel(AccessLevel.CUSTOMER);
 			userSerializer.CreateUser(user);
+			System.menuSystem.setUser(user);
 			System.menuSystem.setCurrentMenu(CustomerMenuImpl.customerMenu);
 		}
 		

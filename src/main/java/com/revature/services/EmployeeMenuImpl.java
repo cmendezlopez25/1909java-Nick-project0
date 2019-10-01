@@ -4,6 +4,8 @@ import static com.revature.util.LoggerUtil.log;
 import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 
+import java.util.List;
+
 import com.revature.pojo.Employee;
 import com.revature.pojo.Offer;
 import com.revature.pojo.System;
@@ -34,7 +36,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		
 		sysout.println("Welcome back, " + currentUser.getName() + "!");
 		sysout.println("1. View the car lot.");
-		sysout.println("2. View all offers.");
+		sysout.println("2. View all pending offers.");
 		sysout.println("3. View all payments");
 		sysout.println("4. Return to the Login Menu");
 		sysout.println("5. Return to the Main Menu");
@@ -108,12 +110,13 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 	
 	private void displayOffers() {
 		log.trace("Entering displayOffers");
-		if (menuSystem.getOffers() == null || menuSystem.getOffers().size() == 0) {
+		List<Offer> offerList = menuSystem.retrievePendingOffers();
+		if (offerList == null || offerList.size() == 0) {
 			sysout.println("There are no offers.");
 		}
 		else {
-			for (int i = 0; i < menuSystem.getOffers().size(); ++i) {
-				sysout.println((i+1) + ". " + menuSystem.getOffers().get(i).toString());
+			for (int i = 0; i < offerList.size(); ++i) {
+				sysout.println((i+1) + ". " + offerList.get(i).toString());
 			}
 			sysout.println("Select an offer to accept or reject, or press c to cancel.");
 			validOfferInput();
@@ -124,12 +127,13 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 	
 	private void validOfferInput() {
 		log.trace("Entering validOfferInput");
+		List<Offer> offerList = menuSystem.retrievePendingOffers();
 		
 		String input = "-1";
 		while (input.equals("-1")) {
 			if (scanner.hasNextInt()) {
 				input = scanner.next();
-				if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > menuSystem.getOffers().size()) {
+				if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > offerList.size()) {
 					input = "-1";
 				}
 			}
@@ -146,7 +150,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		}
 		
 		if (!input.toLowerCase().equals("c")) {
-			Offer offer = menuSystem.getOffers().get(Integer.parseInt(input) -1);
+			Offer offer = offerList.get(Integer.parseInt(input) -1);
 			sysout.println("Press a to accept or r to reject offer: " + offer);
 			acceptRejectOffer(offer);
 		}

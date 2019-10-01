@@ -5,6 +5,7 @@ import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 
 import com.revature.dao.LotDAOSerialization;
+import com.revature.pojo.Car;
 import com.revature.pojo.Lot;
 import com.revature.pojo.Offer;
 import com.revature.pojo.User;
@@ -30,9 +31,7 @@ public class LotMenuImpl implements LotMenu {
 	public Menu display() {
 		log.trace("Entering Lot Menu");
 		
-		if (lot == null) {
-			lot = menuSystem.getLot();
-		}
+		lot = new Lot(menuSystem.retrieveUnownedCars());
 		
 		user = menuSystem.getUser();
 		displayCars();
@@ -76,14 +75,19 @@ public class LotMenuImpl implements LotMenu {
 				}
 				else {
 					if (input.toLowerCase().equals("y")) {
-						
+						addCar();
 					}
 					else {
-						if (lotService.removeCarFromLot(lot.getCars().get(Integer.parseInt(input) - 1))) {
-							sysout.println("Car #" + input + " was removed from the lot.");
+						if (lot.getCars().size() > 0) {
+							if (lotService.removeCarFromLot(lot.getCars().get(Integer.parseInt(input) - 1))) {
+								sysout.println("Car #" + input + " was removed from the lot.");
+							}
+							else {
+								sysout.println("Car #" + input + " could not be removed from the lot.");
+							}
 						}
 						else {
-							sysout.println("Car #" + input + " could not be removed from the lot.");
+							sysout.println("There are no cars to remove.");
 						}
 					}
 				}
@@ -159,6 +163,61 @@ public class LotMenuImpl implements LotMenu {
 		
 		log.trace("Exiting makeOffer");
 		return offer;
+	}
+	
+	private void addCar() {
+		log.trace("Entering addCar");
+		Car car = new Car();
+		sysout.println("Enter the Vehicle Identification Number [Enter exactly 17 letters/numbers with no spaces or dashes]");
+		car.setVin(enterVin());
+		sysout.println("Enter the model");
+		car.setModel(enterModel());
+		sysout.println("Enter the year.");
+		car.setYear(enterYear());
+		lotService.addCarToLot(car);
+		log.trace("Exiting addCar");
+	}
+	
+	private String enterVin() {
+		log.trace("Entering enterVin");
+		String input = "-1";
+		while (input == "-1") {
+			input = scanner.next();
+			if (input.length() == 17) {
+				for (int i = 0; i < 17; ++i) {
+					if (!Character.isLetterOrDigit(input.charAt(i))) {
+						input = "-1";
+						sysout.println("Invalid input. Try again.");
+						break;
+					}
+				}
+			}
+			else {
+				input = "-1";
+				sysout.println("Invalid input. Try again.");
+			}
+		}
+		log.trace("Exiting enterVin");
+		return input;
+	}
+	
+	private String enterModel() {
+		log.trace("Entering enterModel");
+		String input = scanner.next();
+		log.trace("Exiting enterModel");
+		return input;
+	}
+	
+	private int enterYear() {
+		log.trace("Entering enterYear");
+		String input = "";
+		while(!scanner.hasNextInt()) {
+			scanner.next();
+			sysout.println("Invalid input. Try again!");
+		}
+		input = scanner.next();
+		log.trace("Exiting enterYear");
+		return Integer.parseInt(input);
 	}
 	
 	public void setLotDAOSerializer(LotDAOSerialization lotSerializer) {

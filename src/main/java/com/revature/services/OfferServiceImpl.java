@@ -49,7 +49,7 @@ public class OfferServiceImpl implements OfferService {
 			throw new NullPointerException();
 		}
 
-		menuSystem.acceptOffer(offer);
+		menuSystem.acceptOffer(offer, 24);
 		log.trace("Exiting acceptOffer");
 	}
 

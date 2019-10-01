@@ -59,6 +59,7 @@ public class LotDAOSerialization implements LotDAO {
 		} catch (FileNotFoundException e) {
 			log.warn("File not found! Creating a new lot.");
 			lot = new Lot();
+			lot.setCars(new ArrayList<Car>());
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
 		}
