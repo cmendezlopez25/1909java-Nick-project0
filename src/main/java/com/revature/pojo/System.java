@@ -95,6 +95,16 @@ public class System {
 		// TODO
 	}
 	
+	public List<Payment> retrievePaymentsFromUsername(User u){
+		List<Payment> paymentList = new ArrayList<Payment>();
+		for (Payment payment : getPayments()) {
+			if (payment.getOwnerUsername().equals(u.getUsername())) {
+				paymentList.add(payment);
+			}
+		}
+		return paymentList;
+	}
+	
 	public void addOffer(Offer o) {
 		getOffers().add(o);
 		offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
