@@ -18,7 +18,8 @@ import com.revature.pojo.User.AccessLevel;
 
 public class UserDAOSerializationTest {
 	private UserDAOSerialization userSerializer;
-	private User user;
+	private User customer;
+	private User employee;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -31,7 +32,8 @@ public class UserDAOSerializationTest {
 	@Before
 	public void setUp() throws Exception {
 		userSerializer = UserDAOSerialization.userSerializer;
-		user = new User(AccessLevel.EMPLOYEE, "burrito", "Burrito Man", "1234");
+		customer = new User(AccessLevel.CUSTOMER, "burrito", "Burrito Man", "1234");
+		employee = new User(AccessLevel.EMPLOYEE, "human", "Human Person", "12345");
 	}
 
 	@After
@@ -45,7 +47,7 @@ public class UserDAOSerializationTest {
 
 	@Test
 	public void createFile() {
-		userSerializer.CreateUser(user);
+		userSerializer.CreateUser(customer);
 
 		User user2 = null;
 
@@ -57,12 +59,12 @@ public class UserDAOSerializationTest {
 		} catch (ClassNotFoundException e) {
 		}
 
-		assertEquals("File should have been created.", user.getUsername(), user2.getUsername());
+		assertEquals("File should have been created.", customer.getUsername(), user2.getUsername());
 	}
 
 	@Test
 	public void readExistingFile() {
-		assertEquals("Should return user with same username.", user.getUsername(),
+		assertEquals("Should return user with same username.", customer.getUsername(),
 				userSerializer.ReadUserFile("burrito").getUsername());
 	}
 	

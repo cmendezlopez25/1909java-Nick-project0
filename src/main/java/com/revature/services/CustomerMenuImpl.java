@@ -4,13 +4,19 @@ import static com.revature.util.LoggerUtil.log;
 import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 
+import java.util.List;
+
+import com.revature.pojo.Car;
 import com.revature.pojo.Customer;
+import com.revature.pojo.Payment;
 import com.revature.pojo.System;
+import com.revature.pojo.User;
 
 public class CustomerMenuImpl implements CustomerMenu {
 	// singleton
 	public static final CustomerMenuImpl customerMenu = new CustomerMenuImpl();
-	Customer currentUser = null;
+	private PaymentServiceImpl paymentService = new PaymentServiceImpl();
+	User currentUser = null;
 	System menuSystem = System.menuSystem;
 
 	private CustomerMenuImpl() {
@@ -26,7 +32,7 @@ public class CustomerMenuImpl implements CustomerMenu {
 			return null;
 		}
 		
-		currentUser = (Customer)menuSystem.getUser();
+		currentUser = menuSystem.getUser();
 
 		sysout.println("Welcome back, " + currentUser.getName() + "!");
 		sysout.println("1. View your owned cars.");
@@ -91,13 +97,13 @@ public class CustomerMenuImpl implements CustomerMenu {
 	
 	private void displayCars() {
 		log.trace("Entering displayCars");
-		
-		if (currentUser.getOwnedCars() == null || currentUser.getOwnedCars().size() == 0) {
+		List<Car> carList = menuSystem.retrieveCarsByUser(currentUser.getUsername());
+		if (carList == null || carList.size() == 0) {
 			sysout.println("You don't own any cars.");
 		}
 		else {
-			for (int i = 0; i < currentUser.getOwnedCars().size(); ++i) {
-				sysout.println((i+1) + ". " + currentUser.getOwnedCars().get(i).toString());
+			for (int i = 0; i < carList.size(); ++i) {
+				sysout.println((i+1) + ". " + carList.get(i).toString());
 			}
 		}
 		
@@ -106,12 +112,13 @@ public class CustomerMenuImpl implements CustomerMenu {
 	
 	private void displayPayments() {
 		log.trace("Entering displayPayments");
-		if (currentUser.getMyPayments() == null || currentUser.getMyPayments().size() == 0) {
+		List<Payment> paymentList = paymentService.retrievePaymentsByUsername(currentUser);
+		if (paymentList == null || paymentList.size() == 0) {
 			sysout.println("You don't have any payments.");
 		}
 		else {
-			for (int i = 0; i < currentUser.getMyPayments().size(); ++i) {
-				sysout.println((i+1) + ". " + currentUser.getMyPayments().get(i).toString());
+			for (int i = 0; i < paymentList.size(); ++i) {
+				sysout.println((i+1) + ". " + paymentList.get(i).toString());
 			}
 		}
 		log.trace("Exiting displayPayments");

@@ -7,11 +7,12 @@ import static com.revature.util.SystemUtil.sysout;
 import com.revature.pojo.Employee;
 import com.revature.pojo.Offer;
 import com.revature.pojo.System;
+import com.revature.pojo.User;
 
 public class EmployeeMenuImpl implements EmployeeMenu {
 	//singleton
 	public static final EmployeeMenuImpl employeeMenu = new EmployeeMenuImpl();
-	private Employee currentUser = null;
+	private User currentUser = null;
 	private System menuSystem = System.menuSystem;
 	private OfferServiceImpl offerService = new OfferServiceImpl();
 	
@@ -29,7 +30,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 			return null;
 		}
 		
-		currentUser = (Employee)menuSystem.getUser();
+		currentUser = menuSystem.getUser();
 		
 		sysout.println("Welcome back, " + currentUser.getName() + "!");
 		sysout.println("1. View the car lot.");

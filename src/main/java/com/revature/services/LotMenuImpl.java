@@ -70,16 +70,21 @@ public class LotMenuImpl implements LotMenu {
 			default:
 				System.menuSystem.setCurrentMenu(lotMenu);
 				if (user.getAccessLevel() == AccessLevel.CUSTOMER) {
-					Offer offer = makeOffer(lot.getCars().get(Integer.parseInt(input)).getVin());
+					Offer offer = makeOffer(lot.getCars().get(Integer.parseInt(input) - 1).getVin());
 					offerService.addOffer(offer);
 					sysout.println("You made an offer of $" + offer.getMoneyAmount() + "!");
 				}
 				else {
-					if (lotService.removeCarFromLot(lot.getCars().get(Integer.parseInt(input) - 1))) {
-						sysout.println("Car #" + input + " was removed from the lot.");
+					if (input.toLowerCase().equals("y")) {
+						
 					}
 					else {
-						sysout.println("Car #" + input + " could not be removed from the lot.");
+						if (lotService.removeCarFromLot(lot.getCars().get(Integer.parseInt(input) - 1))) {
+							sysout.println("Car #" + input + " was removed from the lot.");
+						}
+						else {
+							sysout.println("Car #" + input + " could not be removed from the lot.");
+						}
 					}
 				}
 				break;

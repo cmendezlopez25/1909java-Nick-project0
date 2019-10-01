@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.revature.services.LoginMenuImpl;
+import com.revature.services.MainMenuImpl;
 import com.revature.services.Menu;
 
 import com.revature.dao.*;
@@ -25,11 +26,11 @@ public class System {
 	private OfferDAOSerialization offerSerializer = OfferDAOSerialization.offerSerializer;
 
 	private System() {
-		setCurrentMenu(LoginMenuImpl.loginMenu);
+		setCurrentMenu(MainMenuImpl.mainMenu);
 		setUser(null);
-		setLot(null);
-		setPayments(null);
-		setOffers(null);
+		setLot(lotSerializer.ReadLotFile("Lot"));
+		setPayments(paymentSerializer.ReadAllPaymentsFile("AllPayments"));
+		setOffers(offerSerializer.ReadAllOffersFiles("AllOffers"));
 	}
 
 	public Menu getCurrentMenu() {
@@ -53,7 +54,12 @@ public class System {
 	}
 
 	public void setLot(Lot lot) {
-		this.lot = lot;
+		if (lot != null) {
+			this.lot = lot;
+		}
+		else {
+			this.lot = new Lot();
+		}
 	}
 
 	public List<Payment> getPayments() {
@@ -61,7 +67,12 @@ public class System {
 	}
 
 	public void setPayments(List<Payment> allPayments) {
-		this.allPayments = allPayments;
+		if (allPayments != null) {
+			this.allPayments = allPayments;
+		}
+		else {
+			this.allPayments = new ArrayList<Payment>();
+		}
 	}
 
 	public List<Offer> getOffers() {
@@ -69,7 +80,22 @@ public class System {
 	}
 
 	public void setOffers(List<Offer> allOffers) {
-		this.allOffers = allOffers;
+		if (allOffers != null) {
+			this.allOffers = allOffers;
+		}
+		else {
+			this.allOffers = new ArrayList<Offer>();
+		}
+	}
+	
+	public List<Car> retrieveCarsByUser(String username){
+		List<Car> carList = new ArrayList<Car>();
+		for (Car car : getLot().getCars()) {
+			if (car.getOwner() != null && car.getOwner().equals(username)) {
+				carList.add(car);
+			}
+		}
+		return carList;
 	}
 
 	public void addCarToLot(Car c) {
