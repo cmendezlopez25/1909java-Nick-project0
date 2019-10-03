@@ -40,6 +40,19 @@ public class OfferServiceImpl implements OfferService {
 		log.trace("Exiting removeOffer");
 		return false;
 	}
+	
+	@Override
+	public void removeOffersOfVin(String vin) {
+		log.trace("Entering removeOffersOfVin");
+		if (vin == null) {
+			log.error("Offer does not exist!");
+			throw new NullPointerException();
+		}
+
+		menuSystem.removeOffersOfVin(vin);
+		
+		log.trace("Exiting removeOffer");
+	}
 
 	@Override
 	public void acceptOffer(Offer offer) {

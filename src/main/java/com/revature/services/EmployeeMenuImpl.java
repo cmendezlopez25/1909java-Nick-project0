@@ -10,6 +10,7 @@ import com.revature.pojo.Employee;
 import com.revature.pojo.Offer;
 import com.revature.pojo.System;
 import com.revature.pojo.User;
+import com.revature.util.SystemUtil;
 
 public class EmployeeMenuImpl implements EmployeeMenu {
 	//singleton
@@ -80,15 +81,13 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 	private int userInput() {
 		log.trace("Entering userInput");
 		
-		if (scanner.hasNextInt()) {
-			int input = scanner.nextInt();
-			if (input >= 1 && input <= 5) {
+		String input = SystemUtil.nextLine();
+		if (SystemUtil.isInt(input)) {
+			int number = Integer.parseInt(input);
+			if (number >= 1 && number <= 5) {
 				log.trace("Exiting userInput");
-				return input;
+				return number;
 			}
-		}
-		else {
-			scanner.next();
 		}
 		
 		log.trace("Exiting userInput");
@@ -131,14 +130,13 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		
 		String input = "-1";
 		while (input.equals("-1")) {
-			if (scanner.hasNextInt()) {
-				input = scanner.next();
+			input = SystemUtil.nextLine();
+			if (SystemUtil.isInt(input)) {
 				if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > offerList.size()) {
 					input = "-1";
 				}
 			}
 			else {
-				input = scanner.next();
 				if (!input.toLowerCase().equals("c")) {
 					input = "-1";
 				}
@@ -163,7 +161,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		
 		String input = "-1";
 		while (input.equals("-1")) {
-			input = scanner.next();
+			input = SystemUtil.nextLine();
 			
 			if (input.toLowerCase().equals("a")) {
 				offerService.acceptOffer(offer);

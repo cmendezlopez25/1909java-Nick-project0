@@ -11,6 +11,7 @@ import com.revature.pojo.Customer;
 import com.revature.pojo.Payment;
 import com.revature.pojo.System;
 import com.revature.pojo.User;
+import com.revature.util.SystemUtil;
 
 public class CustomerMenuImpl implements CustomerMenu {
 	// singleton
@@ -80,15 +81,13 @@ public class CustomerMenuImpl implements CustomerMenu {
 	private int userInput() {
 		log.trace("Entering userInput");
 		
-		if (scanner.hasNextInt()) {
-			int input = scanner.nextInt();
-			if (input >= 1 && input <= 5) {
+		String input = SystemUtil.nextLine();
+		if (SystemUtil.isInt(input)) {
+			int number = Integer.parseInt(input);
+			if (number >= 1 && number <= 5) {
 				log.trace("Exiting userInput");
-				return input;
+				return number;
 			}
-		}
-		else {
-			scanner.next();
 		}
 		
 		log.trace("Exiting userInput");

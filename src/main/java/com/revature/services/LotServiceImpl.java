@@ -35,6 +35,7 @@ public class LotServiceImpl implements LotService {
 		}
 		
 		if (System.menuSystem.removeCarFromLot(c)) {
+			new OfferServiceImpl().removeOffersOfVin(c.getVin());
 			sysout.println("Removed " + c.getVin() + " from Lot");
 			log.trace("Exiting removeCarFromLot");
 			return true;

@@ -8,6 +8,7 @@ import com.revature.pojo.User;
 public interface OfferService {
 	public void addOffer(Offer offer);
 	public boolean removeOffer(Offer offer);
+	public void removeOffersOfVin(String vin);
 	public void acceptOffer(Offer offer);
 	public void rejectOffer(Offer offer);
 	public List<Offer> retrievePendingOffers();

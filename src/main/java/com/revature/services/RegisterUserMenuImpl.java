@@ -8,6 +8,8 @@ import com.revature.dao.UserDAOSerialization;
 import com.revature.pojo.System;
 import com.revature.pojo.User;
 import com.revature.pojo.User.AccessLevel;
+import com.revature.util.LoggerUtil;
+import com.revature.util.SystemUtil;
 
 public class RegisterUserMenuImpl implements RegisterUserMenu {
 	// singleton
@@ -35,9 +37,9 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 		}
 		else {
 			sysout.println("Enter your full name");
-			user.setName(scanner.next());
+			user.setName(SystemUtil.nextLine());
 			sysout.println("Enter your password");
-			user.setPassword(scanner.next());
+			user.setPassword(SystemUtil.nextLine());
 			sysout.println("User creation is successful! Enjoy your new account!");
 			user.setAccessLevel(AccessLevel.CUSTOMER);
 			userSerializer.CreateUser(user);
@@ -52,7 +54,7 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 	private boolean doesUsernameExist(User u) {
 		log.trace("Entering doesUsernameExist()");
 		sysout.println("Enter your username.");
-		u.setUsername(scanner.next());
+		u.setUsername(SystemUtil.nextLine());
 		User user = userSerializer.ReadUserFile(u.getUsername());
 		log.trace("Exiting doesUsernameExist()");
 		return user != null;
@@ -60,7 +62,7 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 	
 	private boolean isValidInput() {
 		log.trace("Entering isValidInput");
-		String input = scanner.next();
+		String input = SystemUtil.nextLine();
 		if (input.length() == 1) {
 			if (input.toLowerCase().charAt(0) == 'y') {
 				System.menuSystem.setCurrentMenu(MainMenuImpl.mainMenu);

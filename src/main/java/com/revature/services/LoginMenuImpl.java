@@ -9,6 +9,7 @@ import static com.revature.util.LoggerUtil.log;
 
 import com.revature.pojo.System;
 import com.revature.pojo.User;
+import com.revature.util.SystemUtil;
 
 public class LoginMenuImpl implements LoginMenu {
 	// singleton
@@ -24,9 +25,9 @@ public class LoginMenuImpl implements LoginMenu {
 		log.trace("Inside Login Menu");
 
 		sysout.println("Enter your username: ");
-		String username = scanner.next();
+		String username = SystemUtil.nextLine();
 		sysout.println("Enter your password: ");
-		String password = scanner.next();
+		String password = SystemUtil.nextLine();
 
 		User user = new User();
 
@@ -70,7 +71,7 @@ public class LoginMenuImpl implements LoginMenu {
 
 	private boolean isValidInput() {
 		log.trace("Entering isValidInput");
-		String input = scanner.next();
+		String input = SystemUtil.nextLine();
 		if (input.length() == 1) {
 			if (input.toLowerCase().charAt(0) == 'y') {
 				System.menuSystem.setCurrentMenu(MainMenuImpl.mainMenu);

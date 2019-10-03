@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.revature.services.LoginMenuImpl;
@@ -118,6 +119,7 @@ public class System {
 
 	public boolean removeCarFromLot(Car c) {
 		if (getLot().getCars().remove(c)) {
+			removeOffersOfVin(c.getVin());
 			lotSerializer.CreateLotFile(lot, "Lot");
 			return true;
 		}
@@ -168,6 +170,16 @@ public class System {
 		}
 
 		return false;
+	}
+	
+	public void removeOffersOfVin(String vin) {
+		List<Offer> offerList = getOffers();
+		for (int i = 0; i < offerList.size(); ++i) {
+			if (offerList.get(i).getCarVin().equals(vin)) {
+				removeOffer(offerList.get(i));
+				--i;
+			}
+		}
 	}
 
 	public void acceptOffer(Offer o, int months) {

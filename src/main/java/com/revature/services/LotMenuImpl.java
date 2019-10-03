@@ -11,6 +11,7 @@ import com.revature.pojo.Offer;
 import com.revature.pojo.User;
 import com.revature.pojo.Offer.OfferStatus;
 import com.revature.pojo.User.AccessLevel;
+import com.revature.util.SystemUtil;
 import com.revature.pojo.System;
 
 public class LotMenuImpl implements LotMenu {
@@ -101,10 +102,9 @@ public class LotMenuImpl implements LotMenu {
 
 	private String validInput() {
 		log.trace("Entering validInput");
-		String ret = "-1";
+		String ret = SystemUtil.nextLine();
 		
-		if (scanner.hasNextInt()) {
-			ret = scanner.next();
+		if (SystemUtil.isInt(ret)) {
 			if (lot.getCars() != null && lot.getCars().size() > 0 && (Integer.parseInt(ret) > lot.getCars().size() || Integer.parseInt(ret) < 0)) {
 				ret = "-1";
 			}
@@ -113,7 +113,6 @@ public class LotMenuImpl implements LotMenu {
 			}
 		}
 		else {
-			ret = scanner.next();
 			if (user.getAccessLevel() != User.AccessLevel.EMPLOYEE) {
 				ret = "-1";
 			}
@@ -142,24 +141,22 @@ public class LotMenuImpl implements LotMenu {
 		
 		sysout.println("How much would you like to offer?");
 		Offer offer = null;
-		double input = -1.0;
-		while (input == -1.0) {
-			if (scanner.hasNextDouble()) {
-				input = Double.parseDouble(scanner.next());
-				if (input <= 0.0){
-					input = -1.0;
+		double number = -1.0;
+		while (number == -1.0) {
+			String input = SystemUtil.nextLine();
+			if (SystemUtil.isDouble(input)) {
+				number = Double.parseDouble(input);
+				if (number <= 0.0){
+					number = -1.0;
 				}
 			}
-			else {
-				scanner.next();
-			}
 			
-			if (input == -1.0) {
+			if (number == -1.0) {
 				sysout.println("Invalid input. Try again.");
 			}
 		}
 		
-		offer = new Offer(OfferStatus.PENDING, input, user.getUsername(), carVin);
+		offer = new Offer(OfferStatus.PENDING, number, user.getUsername(), carVin);
 		
 		log.trace("Exiting makeOffer");
 		return offer;
@@ -182,7 +179,7 @@ public class LotMenuImpl implements LotMenu {
 		log.trace("Entering enterVin");
 		String input = "-1";
 		while (input == "-1") {
-			input = scanner.next();
+			input = SystemUtil.nextLine();
 			if (input.length() == 17) {
 				for (int i = 0; i < 17; ++i) {
 					if (!Character.isLetterOrDigit(input.charAt(i))) {
@@ -203,19 +200,18 @@ public class LotMenuImpl implements LotMenu {
 	
 	private String enterModel() {
 		log.trace("Entering enterModel");
-		String input = scanner.next();
+		String input = SystemUtil.nextLine();
 		log.trace("Exiting enterModel");
 		return input;
 	}
 	
 	private int enterYear() {
 		log.trace("Entering enterYear");
-		String input = "";
-		while(!scanner.hasNextInt()) {
-			scanner.next();
+		String input = SystemUtil.nextLine();
+		while(!SystemUtil.isInt(input)) {
 			sysout.println("Invalid input. Try again!");
+			input = SystemUtil.nextLine();
 		}
-		input = scanner.next();
 		log.trace("Exiting enterYear");
 		return Integer.parseInt(input);
 	}

@@ -4,6 +4,7 @@ import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 import static com.revature.util.LoggerUtil.log;
 import com.revature.pojo.System;
+import com.revature.util.SystemUtil;
 
 public class MainMenuImpl implements MainMenu {
 	// singleton
@@ -48,18 +49,16 @@ public class MainMenuImpl implements MainMenu {
 	}
 
 	private int isValidInput() {
-		if (scanner.hasNextInt())
+		String input = SystemUtil.nextLine();
+		if (SystemUtil.isInt(input))
 		{
-			int number = Integer.parseInt(scanner.next());
+			int number = Integer.parseInt(input);
 			if (number >= 1 && number <= 3)
 			{
 				return number;
 			}
 		}
-		else
-		{
-			scanner.next();
-		}
+		
 		return -1;
 	}
 }
