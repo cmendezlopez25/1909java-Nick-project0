@@ -17,6 +17,7 @@ import org.junit.Test;
 import com.revature.dao.PaymentDAOSerialization;
 import com.revature.pojo.Car;
 import com.revature.pojo.Payment;
+import com.revature.pojo.System;
 
 public class PaymentDAOSerializationTest {
 	private PaymentDAOSerialization paymentSerializer;
@@ -34,9 +35,9 @@ public class PaymentDAOSerializationTest {
 	public void setUp() throws Exception {
 		paymentSerializer = PaymentDAOSerialization.paymentSerializer;
 		paymentList = new ArrayList<Payment>();
-		paymentList.add(new Payment(5555.00, 24, "burrito"));
-		paymentList.add(new Payment(1234.99, 12, "burrito"));
-		paymentList.add(new Payment(8888.10230, 5, "human"));
+		paymentList.add(new Payment(5555.00, System.menuSystem.calculateMonthlyPayment(5555.00, 24), 5555.00, 24, "burrito", "12345678912345678"));
+		paymentList.add(new Payment(1234.99, System.menuSystem.calculateMonthlyPayment(1234.99, 12), 1234.99, 12, "burrito", "12345678912345679"));
+		paymentList.add(new Payment(8888.10230, System.menuSystem.calculateMonthlyPayment(8888.10230, 5), 8888.10230, 5, "human", "12345678912345680"));
 	}
 
 	@After

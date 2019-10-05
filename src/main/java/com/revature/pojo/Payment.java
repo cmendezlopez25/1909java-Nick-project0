@@ -3,18 +3,57 @@ package com.revature.pojo;
 import java.io.Serializable;
 
 public class Payment implements Serializable {
-	private double totalPayment;
+	private double startingPayment;
+	private double monthlyPayment;
+	private double remainingPayment;
 	private int months;
 	private String ownerUsername;
+	private String carVin;
 
-	public double getTotalPayment() {
-		return totalPayment;
+	public Payment() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setTotalPayment(double totalPayment) {
-		double roundedPayment = totalPayment * 100;
+	public Payment(double startingPayment, double monthlyPayment, double remainingPayment, int months,
+			String ownerUsername, String carVin) {
+		super();
+		setStartingPayment(startingPayment);
+		setMonthlyPayment(monthlyPayment);
+		setRemainingPayment(remainingPayment);
+		this.months = months;
+		this.ownerUsername = ownerUsername;
+		this.carVin = carVin;
+	}
+
+	public double getStartingPayment() {
+		return startingPayment;
+	}
+
+	public void setStartingPayment(double startingPayment) {
+		double roundedPayment = startingPayment * 100;
 		roundedPayment = Math.round(roundedPayment);
-		this.totalPayment = roundedPayment / 100.0;
+		this.startingPayment = roundedPayment / 100;
+	}
+
+	public double getMonthlyPayment() {
+		return monthlyPayment;
+	}
+
+	public void setMonthlyPayment(double monthlyPayment) {
+		double roundedPayment = monthlyPayment * 100;
+		roundedPayment = Math.round(roundedPayment);
+		this.monthlyPayment = roundedPayment / 100;
+	}
+
+	public double getRemainingPayment() {
+		return remainingPayment;
+	}
+
+	public void setRemainingPayment(double remainingPayment) {
+		double roundedPayment = remainingPayment * 100;
+		roundedPayment = Math.round(roundedPayment);
+		this.remainingPayment = roundedPayment / 100;
 	}
 
 	public int getMonths() {
@@ -32,26 +71,28 @@ public class Payment implements Serializable {
 	public void setOwnerUsername(String ownerUsername) {
 		this.ownerUsername = ownerUsername;
 	}
-	
-	public Payment() {
-		super();
+
+	public String getCarVin() {
+		return carVin;
 	}
 
-	public Payment(double totalPayment, int months, String ownerUsername) {
-		super();
-		this.totalPayment = totalPayment;
-		this.months = months;
-		this.ownerUsername = ownerUsername;
+	public void setCarVin(String carVin) {
+		this.carVin = carVin;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((carVin == null) ? 0 : carVin.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(monthlyPayment);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + months;
 		result = prime * result + ((ownerUsername == null) ? 0 : ownerUsername.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(totalPayment);
+		temp = Double.doubleToLongBits(remainingPayment);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(startingPayment);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -65,6 +106,13 @@ public class Payment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Payment other = (Payment) obj;
+		if (carVin == null) {
+			if (other.carVin != null)
+				return false;
+		} else if (!carVin.equals(other.carVin))
+			return false;
+		if (Double.doubleToLongBits(monthlyPayment) != Double.doubleToLongBits(other.monthlyPayment))
+			return false;
 		if (months != other.months)
 			return false;
 		if (ownerUsername == null) {
@@ -72,14 +120,17 @@ public class Payment implements Serializable {
 				return false;
 		} else if (!ownerUsername.equals(other.ownerUsername))
 			return false;
-		if (Double.doubleToLongBits(totalPayment) != Double.doubleToLongBits(other.totalPayment))
+		if (Double.doubleToLongBits(remainingPayment) != Double.doubleToLongBits(other.remainingPayment))
+			return false;
+		if (Double.doubleToLongBits(startingPayment) != Double.doubleToLongBits(other.startingPayment))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Payment [totalPayment=" + totalPayment + ", months=" + months + ", ownerUsername=" + ownerUsername
-				+ "]";
+		return "Payment [startingPayment=" + startingPayment + ", monthlyPayment=" + monthlyPayment
+				+ ", remainingPayment=" + remainingPayment + ", months=" + months + ", ownerUsername=" + ownerUsername
+				+ ", carVin=" + carVin + "]";
 	}
 }

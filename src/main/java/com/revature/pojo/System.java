@@ -23,10 +23,10 @@ public class System {
 	private List<Payment> allPayments;
 	private List<Offer> allOffers;
 
-	private LotDAOSerialization lotSerializer = LotDAOSerialization.lotSerializer;
-	private PaymentDAOSerialization paymentSerializer = PaymentDAOSerialization.paymentSerializer;
-	private UserDAOSerialization userSerializer = UserDAOSerialization.userSerializer;
-	private OfferDAOSerialization offerSerializer = OfferDAOSerialization.offerSerializer;
+	private LotDAO lotSerializer = LotDAOSerialization.lotSerializer;
+	private PaymentDAO paymentSerializer = PaymentDAOSerialization.paymentSerializer;
+	private UserDAO userSerializer = UserDAOSerialization.userSerializer;
+	private OfferDAO offerSerializer = OfferDAOSerialization.offerSerializer;
 
 	private System() {
 		setCurrentMenu(MainMenuImpl.mainMenu);
@@ -144,8 +144,8 @@ public class System {
 		paymentSerializer.CreatePaymentFile(getPayments(), "AllPayments");
 	}
 
-	public void calculatePayment(Payment p) {
-		// TODO
+	public double calculateMonthlyPayment(double totalPayment, int months) {
+		return totalPayment / months;
 	}
 
 	public List<Payment> retrievePaymentsFromUsername(User u) {
@@ -156,6 +156,11 @@ public class System {
 			}
 		}
 		return paymentList;
+	}
+	
+	public void makePayment(Payment p) {
+		p.setRemainingPayment(p.getRemainingPayment() - p.getMonthlyPayment());
+		p.setMonths(p.getMonths() - 1);
 	}
 
 	public void addOffer(Offer o) {
@@ -190,7 +195,7 @@ public class System {
 			Car c = retrieveCarFromLotByVin(o.getCarVin());
 			c.setOwner(o.getOwnerUsername());
 			o.setCarVin(c.getVin());
-			addPayment(new Payment(o.getMoneyAmount(), months, o.getOwnerUsername()));
+			addPayment(new Payment(o.getMoneyAmount(), calculateMonthlyPayment(o.getMoneyAmount(), months), o.getMoneyAmount(), months, o.getOwnerUsername(), c.getVin()));
 
 			rejectAllOffersOfVin(offer.getCarVin());
 		}

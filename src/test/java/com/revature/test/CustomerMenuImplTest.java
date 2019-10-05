@@ -55,9 +55,9 @@ public class CustomerMenuImplTest {
 		listCars.add(new Car("VIN number", "Burrito", 1999, customer.getUsername()));
 		
 		List<Payment> listPayments = new ArrayList<Payment>();
-		listPayments.add(new Payment(123123, 24, customer.getUsername()));
-		listPayments.add(new Payment(123123.12313, 24, customer.getUsername()));
-		listPayments.add(new Payment(123123.777, 24, customer.getUsername()));
+		listPayments.add(new Payment(123334.123123123, System.menuSystem.calculateMonthlyPayment(123334.123123123, 24), 123334.123123123, 24, customer.getName(), listCars.get(0).getVin()));
+		listPayments.add(new Payment(2, System.menuSystem.calculateMonthlyPayment(2, 24), 2, 24, customer.getName(), listCars.get(1).getVin()));
+		listPayments.add(new Payment(44.44, System.menuSystem.calculateMonthlyPayment(44.44, 24), 44.44, 24, customer.getName(), listCars.get(2).getVin()));
 		
 		customer.setAccessLevel(User.AccessLevel.CUSTOMER);
 		customer.setMyPayments(listPayments);

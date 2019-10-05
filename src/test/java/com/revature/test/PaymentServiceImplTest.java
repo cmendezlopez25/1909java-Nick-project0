@@ -46,8 +46,8 @@ public class PaymentServiceImplTest {
 		
 		paymentList = new ArrayList<Payment>();
 		
-		paymentList.add(new Payment(1235.03, 26, "human"));
-		paymentList.add(new Payment(123145.12983, 8, "human"));
+		paymentList.add(new Payment(5555.00, System.menuSystem.calculateMonthlyPayment(5555.00, 24), 5555.00, 24, "burrito", "12345678912345678"));
+		paymentList.add(new Payment(1234.99, System.menuSystem.calculateMonthlyPayment(1234.99, 12), 1234.99, 12, "burrito", "12345678912345679"));
 		
 		burrito = new User(AccessLevel.CUSTOMER, "burrito", "Burrito Man", "1234");
 		human = new User(AccessLevel.EMPLOYEE, "human", "Human Person", "12345");

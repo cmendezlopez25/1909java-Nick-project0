@@ -56,10 +56,10 @@ public class EmployeeMenuImplTest {
 		employee.setAllPayments(null);
 
 		List<Payment> payments = new ArrayList<Payment>();
-		payments.add(new Payment(123334.123123123, 24, "burrito"));
-		payments.add(new Payment(2, 24, "burrito"));
-		payments.add(new Payment(44.44, 24, "burrito"));
-		payments.add(new Payment(3.8923, 24, "burrito"));
+		payments.add(new Payment(123334.123123123, System.menuSystem.calculateMonthlyPayment(123334.123123123, 24), 123334.123123123, 24, "burrito", "12345678912345678"));
+		payments.add(new Payment(2, System.menuSystem.calculateMonthlyPayment(2, 24), 2, 24, "burrito", "12345678912345678"));
+		payments.add(new Payment(44.44, System.menuSystem.calculateMonthlyPayment(44.44, 24), 44.44, 24, "burrito", "12345678912345678"));
+		payments.add(new Payment(3.8923, System.menuSystem.calculateMonthlyPayment(3.8923, 24), 3.8923, 24, "burrito", "12345678912345678"));
 		
 		List<Offer> offers = new ArrayList<Offer>();
 		offers.add(new Offer(OfferStatus.PENDING, 12345.0, "burrito", "12345678912345678"));
