@@ -51,8 +51,8 @@ public class LotMenuImplTest {
 		user = new User();
 		lot = new Lot();
 		lot.setCars(new ArrayList<Car>());
-		lot.getCars().add(new Car("VIN number thing", "Toyota", 1994, new Customer().getUsername()));
-		lot.getCars().add(new Car("Another VIN", "Ferrari", 1991, new Customer().getUsername()));
+		lot.getCars().add(new Car("VIN number thing", "Toyota", 1994, new Customer().getUsername(), 50000.00));
+		lot.getCars().add(new Car("Another VIN", "Ferrari", 1991, new Customer().getUsername(), 50000.00));
 	}
 
 	@After

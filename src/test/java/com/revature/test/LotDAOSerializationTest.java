@@ -36,8 +36,8 @@ public class LotDAOSerializationTest {
 		lotSerializer = LotDAOSerialization.lotSerializer;
 		lot = new Lot();
 		lot.setCars(new ArrayList<Car>());
-		lot.getCars().add(new Car("12345678912345678", "Toyota", 1994, null));
-		lot.getCars().add(new Car("12345678912345678", "Ferrari", 1990, null));
+		lot.getCars().add(new Car("12345678912345678", "Toyota", 1994, null, 50000.00));
+		lot.getCars().add(new Car("12345678912345678", "Ferrari", 1990, null, 50000.00));
 	}
 
 	@After

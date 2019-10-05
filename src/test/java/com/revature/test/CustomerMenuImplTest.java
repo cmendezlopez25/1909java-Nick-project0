@@ -50,9 +50,9 @@ public class CustomerMenuImplTest {
 		customer = new Customer();
 		
 		List<Car> listCars = new ArrayList<Car>();
-		listCars.add(new Car("VIN number", "Toyota", 1990, customer.getUsername()));
-		listCars.add(new Car("VIN number", "Lamborghini", 2010, customer.getUsername()));
-		listCars.add(new Car("VIN number", "Burrito", 1999, customer.getUsername()));
+		listCars.add(new Car("VIN number", "Toyota", 1990, customer.getUsername(), 50000.00));
+		listCars.add(new Car("VIN number", "Lamborghini", 2010, customer.getUsername(), 50000.00));
+		listCars.add(new Car("VIN number", "Burrito", 1999, customer.getUsername(), 50000.00));
 		
 		List<Payment> listPayments = new ArrayList<Payment>();
 		listPayments.add(new Payment(123334.123123123, System.menuSystem.calculateMonthlyPayment(123334.123123123, 24), 123334.123123123, 24, customer.getName(), listCars.get(0).getVin()));
