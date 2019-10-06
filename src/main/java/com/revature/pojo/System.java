@@ -23,7 +23,7 @@ public class System {
 	private List<Payment> allPayments;
 	private List<Offer> allOffers;
 
-	private LotDAO lotSerializer = LotDAOSerialization.lotSerializer;
+	private LotDAO lotSerializer = new LotDAOPostgres();
 	private PaymentDAO paymentSerializer = PaymentDAOSerialization.paymentSerializer;
 	private UserDAO userSerializer = UserDAOSerialization.userSerializer;
 	private OfferDAO offerSerializer = OfferDAOSerialization.offerSerializer;
@@ -114,13 +114,13 @@ public class System {
 
 	public void addCarToLot(Car c) {
 		getLot().getCars().add(c);
-		lotSerializer.CreateLotFile(lot, "Lot");
+		lotSerializer.addCarToLot(c);
 	}
 
 	public boolean removeCarFromLot(Car c) {
 		if (getLot().getCars().remove(c)) {
 			removeOffersOfVin(c.getVin());
-			lotSerializer.CreateLotFile(lot, "Lot");
+			lotSerializer.removeCar(c);
 			return true;
 		}
 
@@ -195,6 +195,7 @@ public class System {
 			Car c = retrieveCarFromLotByVin(o.getCarVin());
 			c.setOwner(o.getOwnerUsername());
 			o.setCarVin(c.getVin());
+			lotSerializer.updateCarOwner(c);
 			addPayment(new Payment(o.getMoneyAmount(), calculateMonthlyPayment(o.getMoneyAmount(), months), o.getMoneyAmount(), months, o.getOwnerUsername(), c.getVin()));
 
 			rejectAllOffersOfVin(offer.getCarVin());

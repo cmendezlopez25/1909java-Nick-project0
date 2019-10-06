@@ -44,6 +44,11 @@ public class LotDAOSerialization implements LotDAO {
 
 		log.trace("Exiting CreateLotFile");
 	}
+	
+	@Override
+	public void addCarToLot(Car car) {
+		
+	}
 
 	@Override
 	public Lot ReadLotFile(String filename) {
@@ -64,6 +69,18 @@ public class LotDAOSerialization implements LotDAO {
 		} catch (ClassNotFoundException e) {
 		}
 		return lot;
+	}
+
+	@Override
+	public void updateCarOwner(Car c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeCar(Car car) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
