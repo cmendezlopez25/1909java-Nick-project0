@@ -25,7 +25,7 @@ public class System {
 
 	private LotDAO lotSerializer = new LotDAOPostgres();
 	private PaymentDAO paymentSerializer = PaymentDAOSerialization.paymentSerializer;
-	private UserDAO userSerializer = UserDAOSerialization.userSerializer;
+	private UserDAO userSerializer = new UserDAOPostgres();
 	private OfferDAO offerSerializer = OfferDAOSerialization.offerSerializer;
 
 	private System() {
