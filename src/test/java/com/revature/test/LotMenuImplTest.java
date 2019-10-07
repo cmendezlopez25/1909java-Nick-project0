@@ -32,9 +32,6 @@ public class LotMenuImplTest {
 	private Lot lot;
 	
 	@Mock
-	private LotDAOSerialization lotSerializer;
-	
-	@Mock
 	private System menuSystem;
 
 	@BeforeClass
@@ -63,8 +60,6 @@ public class LotMenuImplTest {
 	public void enterCustomerMenu() {
 		user.setAccessLevel(User.AccessLevel.CUSTOMER);
 		when(menuSystem.getUser()).thenReturn(user);
-		when(lotSerializer.ReadLotFile("Lot.lot")).thenReturn(lot);
-		lotMenu.setLotDAOSerializer(lotSerializer);
 		lotMenu.setSystem(menuSystem);
 		assertEquals("Should enter Customer Menu", CustomerMenuImpl.customerMenu, lotMenu.display());
 	}
@@ -73,8 +68,6 @@ public class LotMenuImplTest {
 	public void enterEmployeeMenu() {
 		user.setAccessLevel(User.AccessLevel.EMPLOYEE);
 		when(menuSystem.getUser()).thenReturn(user);
-		when(lotSerializer.ReadLotFile("Lot.lot")).thenReturn(lot);
-		lotMenu.setLotDAOSerializer(lotSerializer);
 		lotMenu.setSystem(menuSystem);
 		assertEquals("Should enter Employee Menu", EmployeeMenuImpl.employeeMenu, lotMenu.display());
 	}
@@ -83,8 +76,6 @@ public class LotMenuImplTest {
 	public void reenterLotMenuEmployee() {
 		user.setAccessLevel(User.AccessLevel.EMPLOYEE);
 		when(menuSystem.getUser()).thenReturn(user);
-		when(lotSerializer.ReadLotFile("Lot.lot")).thenReturn(lot);
-		lotMenu.setLotDAOSerializer(lotSerializer);
 		lotMenu.setSystem(menuSystem);
 		assertEquals("Should re-enter Lot Menu only if Employee", lotMenu, lotMenu.display());
 	}
@@ -93,8 +84,6 @@ public class LotMenuImplTest {
 	public void reenterLotMenuCustomer() {
 		user.setAccessLevel(User.AccessLevel.CUSTOMER);
 		when(menuSystem.getUser()).thenReturn(user);
-		when(lotSerializer.ReadLotFile("Lot.lot")).thenReturn(lot);
-		lotMenu.setLotDAOSerializer(lotSerializer);
 		lotMenu.setSystem(menuSystem);
 		assertEquals("Should re-enter Lot Menu only if Customer", lotMenu, lotMenu.display());
 	}

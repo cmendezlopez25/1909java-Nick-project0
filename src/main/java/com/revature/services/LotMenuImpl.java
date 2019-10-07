@@ -17,7 +17,6 @@ import com.revature.pojo.System;
 public class LotMenuImpl implements LotMenu {
 	//singleton
 	public static final LotMenuImpl lotMenu = new LotMenuImpl();
-	private LotDAOSerialization lotSerializer = LotDAOSerialization.lotSerializer;
 	private LotServiceImpl lotService = new LotServiceImpl();
 	private OfferServiceImpl offerService = new OfferServiceImpl();
 	private System menuSystem = System.menuSystem;
@@ -214,10 +213,6 @@ public class LotMenuImpl implements LotMenu {
 		}
 		log.trace("Exiting enterYear");
 		return Integer.parseInt(input);
-	}
-	
-	public void setLotDAOSerializer(LotDAOSerialization lotSerializer) {
-		this.lotSerializer = lotSerializer;
 	}
 	
 	public void setSystem(System menuSystem) {

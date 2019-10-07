@@ -43,19 +43,22 @@ public class UserDAOPostgres implements UserDAO {
 
 	@Override
 	public User ReadUserFile(String username) {
-		User user = new User();
+		log.trace("Entering UserDAOPostgres's readUserFile");
 		if (username == null) {
 			return null;
 		}
 
-		String sql = "select * from user_table where user = ?";
+		User user = null;
+		
+		String sql = "select * from user_table where username = ?";
 
 		try {
 			conn.setSchema(schemaName);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
-			while (rs != null && rs.next()) {
+			if (rs != null && rs.next()) {
+				user = new User();
 				user.setUsername(rs.getString(1));
 				user.setName(rs.getString(2));
 				user.setPassword(rs.getString(3));
@@ -67,6 +70,7 @@ public class UserDAOPostgres implements UserDAO {
 			user = null;
 		}
 
+		log.trace("Exiting UserDAOPostgres's readUserFile");
 		return user;
 	}
 

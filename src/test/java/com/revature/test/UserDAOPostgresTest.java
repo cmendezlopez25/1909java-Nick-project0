@@ -68,7 +68,7 @@ public class UserDAOPostgresTest {
 
 	@Test
 	public void readUserPostgres() {
-		sql = "select * from user_table where user = ?";
+		sql = "select * from user_table where username = ?";
 		
 		try {
 			when(conn.prepareStatement(sql)).thenReturn(stmt);

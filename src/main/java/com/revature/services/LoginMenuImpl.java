@@ -3,6 +3,8 @@ package com.revature.services;
 import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 
+import com.revature.dao.UserDAO;
+import com.revature.dao.UserDAOPostgres;
 import com.revature.dao.UserDAOSerialization;
 
 import static com.revature.util.LoggerUtil.log;
@@ -14,7 +16,7 @@ import com.revature.util.SystemUtil;
 public class LoginMenuImpl implements LoginMenu {
 	// singleton
 	public static LoginMenuImpl loginMenu = new LoginMenuImpl();
-	private UserDAOSerialization userSerializer = UserDAOSerialization.userSerializer;
+	private UserDAO userSerializer = new UserDAOPostgres();
 
 	private LoginMenuImpl() {
 		log.trace("Creating Login Menu");

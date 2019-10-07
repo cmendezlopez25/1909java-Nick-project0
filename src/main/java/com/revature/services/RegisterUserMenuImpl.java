@@ -4,6 +4,8 @@ import static com.revature.util.SystemUtil.scanner;
 import static com.revature.util.SystemUtil.sysout;
 import static com.revature.util.LoggerUtil.log;
 
+import com.revature.dao.UserDAO;
+import com.revature.dao.UserDAOPostgres;
 import com.revature.dao.UserDAOSerialization;
 import com.revature.pojo.System;
 import com.revature.pojo.User;
@@ -14,7 +16,7 @@ import com.revature.util.SystemUtil;
 public class RegisterUserMenuImpl implements RegisterUserMenu {
 	// singleton
 	public static final RegisterUserMenuImpl registerMenu = new RegisterUserMenuImpl();
-	private UserDAOSerialization userSerializer = UserDAOSerialization.userSerializer;
+	private UserDAO userSerializer = new UserDAOPostgres();
 
 	private RegisterUserMenuImpl() {
 		log.trace("Creating Register User menu");
