@@ -23,7 +23,7 @@ public class UserDAOPostgres implements UserDAO {
 			throw new NullPointerException();
 		}
 
-		String sql = "insert into user_table(username, name, password, role) values(?, ?, ?, ?)";
+		String sql = "insert into " + schemaName + ".user_table(username, name, password, role) values(?, ?, ?, ?)";
 
 		try {
 			conn.setSchema(schemaName);
@@ -50,7 +50,7 @@ public class UserDAOPostgres implements UserDAO {
 
 		User user = null;
 		
-		String sql = "select * from user_table where username = ?";
+		String sql = "select * from " + schemaName + ".user_table where username = ?";
 
 		try {
 			conn.setSchema(schemaName);

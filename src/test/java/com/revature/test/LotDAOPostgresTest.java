@@ -30,22 +30,25 @@ public class LotDAOPostgresTest {
 	private LotDAOPostgres lotDao = new LotDAOPostgres();
 	private Car car;
 	private String sql;
-	
+
 	@Mock
 	Connection conn;
-	
+
 	@Spy
-	PreparedStatement insertStmt = ConnectionFactory.getConnection().prepareStatement("insert into test.lot(vin, username, model, year, baseprice) values(?, ?, ?, ?, ?)");
-	
+	PreparedStatement insertStmt = ConnectionFactory.getConnection()
+			.prepareStatement("insert into test.lot(vin, username, model, year, baseprice) values(?, ?, ?, ?, ?)");
+
 	@Spy
 	PreparedStatement selectStmt = ConnectionFactory.getConnection().prepareStatement("select * from test.lot");
-	
+
 	@Spy
-	PreparedStatement updateStmt = ConnectionFactory.getConnection().prepareStatement("update test.lot set username = ? where vin = ?");
-	
+	PreparedStatement updateStmt = ConnectionFactory.getConnection()
+			.prepareStatement("update test.lot set username = ? where vin = ?");
+
 	@Spy
-	PreparedStatement deleteStmt = ConnectionFactory.getConnection().prepareStatement("delete from test.lot where vin = ?");
-	
+	PreparedStatement deleteStmt = ConnectionFactory.getConnection()
+			.prepareStatement("delete from test.lot where vin = ?");
+
 	@Mock
 	ResultSet rs;
 
@@ -65,6 +68,8 @@ public class LotDAOPostgresTest {
 		car.setModel("Toyota");
 		car.setYear(1994);
 		car.setOwner("human");
+
+		lotDao.setSchemaname("test");
 	}
 
 	@After
@@ -77,8 +82,7 @@ public class LotDAOPostgresTest {
 		try {
 			when(conn.prepareStatement(sql)).thenReturn(insertStmt);
 			lotDao.setConnection(conn);
-			lotDao.setSchemaname("test");
-			
+
 			lotDao.addCarToLot(car);
 			Mockito.verify(insertStmt).executeUpdate();
 		} catch (SQLException e) {
@@ -90,7 +94,6 @@ public class LotDAOPostgresTest {
 	public void readAllCarsPostgres() {
 		sql = "select * from test.lot";
 		try {
-			lotDao.setSchemaname("test");
 			when(conn.prepareStatement(sql)).thenReturn(selectStmt);
 			lotDao.setConnection(conn);
 			lotDao.ReadLotFile("lot");
@@ -99,12 +102,11 @@ public class LotDAOPostgresTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void updateCarsPostgres() {
 		sql = "update test.lot set username = ? where vin = ?";
 		try {
-			lotDao.setSchemaname("test");
 			when(conn.prepareStatement(sql)).thenReturn(updateStmt);
 			lotDao.setConnection(conn);
 			lotDao.updateCarOwner(car);
@@ -113,13 +115,12 @@ public class LotDAOPostgresTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void removeCarPostgres() {
 		sql = "delete from test.lot where vin = ?";
 
 		try {
-			lotDao.setSchemaname("test");
 			when(conn.prepareStatement(sql)).thenReturn(deleteStmt);
 			lotDao.setConnection(conn);
 			lotDao.removeCar(car);
@@ -128,8 +129,8 @@ public class LotDAOPostgresTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public LotDAOPostgresTest() throws SQLException {
-		
+
 	}
 }

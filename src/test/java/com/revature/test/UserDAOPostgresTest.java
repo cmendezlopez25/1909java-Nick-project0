@@ -15,10 +15,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.revature.dao.UserDAOPostgres;
 import com.revature.pojo.User;
+import com.revature.util.ConnectionFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDAOPostgresTest {
@@ -29,9 +31,12 @@ public class UserDAOPostgresTest {
 	@Mock
 	private Connection conn;
 
-	@Mock
-	private PreparedStatement stmt;
+	@Spy
+	private PreparedStatement createStmt = ConnectionFactory.getConnection().prepareStatement("insert into test.user_table(username, name, password, role) values(?, ?, ?, ?)");
 
+	@Spy
+	private PreparedStatement readStmt = ConnectionFactory.getConnection().prepareStatement("select * from test.user_table where username = ?");
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -53,14 +58,14 @@ public class UserDAOPostgresTest {
 
 	@Test
 	public void createUserPostgres() {
-		sql = "insert into user_table(username, name, password, role) values(?, ?, ?, ?)";
+		sql = "insert into test.user_table(username, name, password, role) values(?, ?, ?, ?)";
 
 		try {
-			when(conn.prepareStatement(sql)).thenReturn(stmt);
+			when(conn.prepareStatement(sql)).thenReturn(createStmt);
 			userDAO.setConnection(conn);
 
 			userDAO.CreateUser(user);
-			Mockito.verify(stmt).executeUpdate();
+			Mockito.verify(createStmt).executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -68,16 +73,20 @@ public class UserDAOPostgresTest {
 
 	@Test
 	public void readUserPostgres() {
-		sql = "select * from user_table where username = ?";
+		sql = "select * from test.user_table where username = ?";
 		
 		try {
-			when(conn.prepareStatement(sql)).thenReturn(stmt);
+			when(conn.prepareStatement(sql)).thenReturn(readStmt);
 			userDAO.setConnection(conn);
 			
 			userDAO.ReadUserFile(user.getUsername());
-			Mockito.verify(stmt).executeQuery();
+			Mockito.verify(readStmt).executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public UserDAOPostgresTest() throws SQLException {
+		
 	}
 }
