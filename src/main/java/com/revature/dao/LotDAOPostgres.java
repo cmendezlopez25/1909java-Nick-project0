@@ -26,10 +26,9 @@ public class LotDAOPostgres implements LotDAO {
 	@Override
 	public void addCarToLot(Car car) {
 		log.trace("Entering LotDAOPostgres's addCarToLot");
-		String sql = "insert into lot(vin, username, model, year, baseprice) values(?, ?, ?, ?, ?)";
+		String sql = "insert into " + schemaName + ".lot(vin, username, model, year, baseprice) values(?, ?, ?, ?, ?)";
 		
 		try {
-			conn.setSchema(schemaName);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, car.getVin());
 			stmt.setString(2, car.getOwner());
@@ -47,13 +46,12 @@ public class LotDAOPostgres implements LotDAO {
 	@Override
 	public Lot ReadLotFile(String filename) {
 		log.trace("Entering LotDAOPostgres's readLotFile");
-		String sql = "select * from lot";
+		String sql = "select * from " + schemaName + ".lot";
 		
 		Lot lot = new Lot();
 		
 		try {
-			conn.setSchema(schemaName);
-			ResultSet rs = conn.createStatement().executeQuery(sql);
+			ResultSet rs = conn.prepareStatement(sql).executeQuery();
 			while (rs != null && rs.next()) {
 				Car car = new Car();
 				car.setVin(rs.getString(1));
@@ -80,7 +78,7 @@ public class LotDAOPostgres implements LotDAO {
 	@Override
 	public void updateCarOwner(Car c) {
 		log.trace("Entering LotDAOPostgres's updateCarOwner");
-		String sql = "update lot set username = ? where vin = ?";
+		String sql = "update " + schemaName + ".lot set username = ? where vin = ?";
 		
 		try {
 			conn.setSchema(schemaName);
@@ -99,10 +97,9 @@ public class LotDAOPostgres implements LotDAO {
 	@Override
 	public void removeCar(Car c) {
 		log.trace("Entering LotDAOPostgres's removeCar");
-		String sql = "delete from lot where vin = ?";
+		String sql = "delete from " + schemaName + ".lot where vin = ?";
 		
 		try {
-			conn.setSchema(schemaName);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, c.getVin());
 			stmt.executeUpdate();
