@@ -66,6 +66,7 @@ public class OfferDAOPostgres implements OfferDAO {
 				offer.setCarVin(rs.getString(2));
 				offer.setMoneyAmount(rs.getDouble(3));
 				offer.setOfferStatus(OfferStatus.valueOf(rs.getString(4)));
+				offerList.add(offer);
 			}
 		} catch (SQLException e) {
 			log.error("Could not find offers!");

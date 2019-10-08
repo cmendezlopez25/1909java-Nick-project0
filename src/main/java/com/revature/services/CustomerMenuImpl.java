@@ -7,7 +7,6 @@ import static com.revature.util.SystemUtil.sysout;
 import java.util.List;
 
 import com.revature.pojo.Car;
-import com.revature.pojo.Customer;
 import com.revature.pojo.Payment;
 import com.revature.pojo.System;
 import com.revature.pojo.User;

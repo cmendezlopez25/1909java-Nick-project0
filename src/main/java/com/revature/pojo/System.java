@@ -196,6 +196,7 @@ public class System {
 			c.setOwner(o.getOwnerUsername());
 			o.setCarVin(c.getVin());
 			lotSerializer.updateCarOwner(c);
+			offerSerializer.updateOffer(o);
 			addPayment(new Payment(o.getMoneyAmount(), calculateMonthlyPayment(o.getMoneyAmount(), months), o.getMoneyAmount(), months, o.getOwnerUsername(), c.getVin()));
 
 			rejectAllOffersOfVin(offer.getCarVin());
@@ -206,6 +207,7 @@ public class System {
 		if (getOffers().contains(o)) {
 			Offer offer = getOffers().get(getOffers().indexOf(o));
 			offer.setOfferStatus(OfferStatus.REJECTED);
+			offerSerializer.updateOffer(offer);
 		}
 	}
 

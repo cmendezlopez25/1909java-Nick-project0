@@ -17,7 +17,6 @@ import com.revature.services.LotMenuImpl;
 import com.revature.dao.LotDAOSerialization;
 import com.revature.pojo.User;
 import com.revature.pojo.Car;
-import com.revature.pojo.Customer;
 import com.revature.pojo.Lot;
 import com.revature.pojo.System;
 
@@ -48,8 +47,8 @@ public class LotMenuImplTest {
 		user = new User();
 		lot = new Lot();
 		lot.setCars(new ArrayList<Car>());
-		lot.getCars().add(new Car("VIN number thing", "Toyota", 1994, new Customer().getUsername(), 50000.00));
-		lot.getCars().add(new Car("Another VIN", "Ferrari", 1991, new Customer().getUsername(), 50000.00));
+		lot.getCars().add(new Car("VIN number thing", "Toyota", 1994, new User().getUsername(), 50000.00));
+		lot.getCars().add(new Car("Another VIN", "Ferrari", 1991, new User().getUsername(), 50000.00));
 	}
 
 	@After

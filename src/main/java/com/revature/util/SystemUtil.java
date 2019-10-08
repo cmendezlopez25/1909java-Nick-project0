@@ -12,8 +12,12 @@ public class SystemUtil {
 	}
 	
 	public static boolean isValidInput(String input, boolean isCaseSensitive, String ... validInput) {
-		if (input == null) {
+		if (input == null || input.isEmpty()) {
 			return false;
+		}
+		
+		if (validInput == null || validInput.length == 0) {
+			return true;
 		}
 		
 		if (isCaseSensitive) {

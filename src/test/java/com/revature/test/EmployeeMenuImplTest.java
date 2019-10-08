@@ -16,11 +16,10 @@ import com.revature.services.EmployeeMenuImpl;
 import com.revature.services.LoginMenuImpl;
 import com.revature.services.LotMenuImpl;
 import com.revature.services.MainMenuImpl;
-import com.revature.pojo.Customer;
-import com.revature.pojo.Employee;
 import com.revature.pojo.Offer;
 import com.revature.pojo.Payment;
 import com.revature.pojo.System;
+import com.revature.pojo.User;
 import com.revature.pojo.Offer.OfferStatus;
 import com.revature.pojo.User.AccessLevel;
 
@@ -31,7 +30,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeMenuImplTest {
 	private EmployeeMenuImpl employeeMenu;
-	private Employee employee;
+	private User employee;
 
 	@Mock
 	System menuSystem;
@@ -47,14 +46,12 @@ public class EmployeeMenuImplTest {
 	@Before
 	public void setUp() throws Exception {
 		employeeMenu = EmployeeMenuImpl.employeeMenu;
-		employee = new Employee();
+		employee = new User();
 		employee.setAccessLevel(AccessLevel.EMPLOYEE);
 		employee.setUsername("burrito");
 		employee.setName("Burrito Man");
 		employee.setPassword("1234");
-		employee.setAllOffers(null);
-		employee.setAllPayments(null);
-
+		
 		List<Payment> payments = new ArrayList<Payment>();
 		payments.add(new Payment(123334.123123123, System.menuSystem.calculateMonthlyPayment(123334.123123123, 24), 123334.123123123, 24, "burrito", "12345678912345678"));
 		payments.add(new Payment(2, System.menuSystem.calculateMonthlyPayment(2, 24), 2, 24, "burrito", "12345678912345678"));
