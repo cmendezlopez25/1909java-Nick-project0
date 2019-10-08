@@ -63,4 +63,16 @@ public class PaymentDAOSerialization implements PaymentDAO {
 		}
 		return paymentList;
 	}
+
+	@Override
+	public void addPayment(Payment payment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePayment(Payment payment) {
+		// TODO Auto-generated method stub
+		
+	}
 }

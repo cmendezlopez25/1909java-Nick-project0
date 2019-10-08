@@ -24,16 +24,16 @@ public class System {
 	private List<Offer> allOffers;
 
 	private LotDAO lotSerializer = new LotDAOPostgres();
-	private PaymentDAO paymentSerializer = PaymentDAOSerialization.paymentSerializer;
+	private PaymentDAO paymentSerializer = new PaymentDAOPostgres();
 	private UserDAO userSerializer = new UserDAOPostgres();
-	private OfferDAO offerSerializer = OfferDAOSerialization.offerSerializer;
+	private OfferDAO offerSerializer = new OfferDAOPostgres();
 
 	private System() {
 		setCurrentMenu(MainMenuImpl.mainMenu);
 		setUser(null);
 		setLot(lotSerializer.ReadLotFile("Lot"));
-		setPayments(paymentSerializer.ReadAllPaymentsFile("AllPayments"));
-		setOffers(offerSerializer.ReadAllOffersFiles("AllOffers"));
+		setPayments(paymentSerializer.ReadAllPaymentsFile("payment"));
+		setOffers(offerSerializer.ReadAllOffersFiles("offer"));
 	}
 
 	public Menu getCurrentMenu() {
@@ -141,7 +141,7 @@ public class System {
 
 	public void addPayment(Payment p) {
 		getPayments().add(p);
-		paymentSerializer.CreatePaymentFile(getPayments(), "AllPayments");
+		paymentSerializer.addPayment(p);
 	}
 
 	public double calculateMonthlyPayment(double totalPayment, int months) {
@@ -161,16 +161,16 @@ public class System {
 	public void makePayment(Payment p) {
 		p.setRemainingPayment(p.getRemainingPayment() - p.getMonthlyPayment());
 		p.setMonths(p.getMonths() - 1);
+		paymentSerializer.updatePayment(p);
 	}
 
 	public void addOffer(Offer o) {
 		getOffers().add(o);
-		offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
+		offerSerializer.addOffer(o);
 	}
 
 	public boolean removeOffer(Offer o) {
 		if (getOffers().remove(o)) {
-			offerSerializer.CreateOfferFile(getOffers(), "AllOffers");
 			return true;
 		}
 

@@ -69,4 +69,16 @@ public class OfferDAOSerialization implements OfferDAO {
 		return offerList;
 	}
 
+	@Override
+	public void updateOffer(Offer o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addOffer(Offer o) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
