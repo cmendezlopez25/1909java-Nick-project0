@@ -99,7 +99,9 @@ public class Offer implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Offer [offerStatus=" + offerStatus + ", moneyAmount=" + moneyAmount + ", ownerUsername=" + ownerUsername
-				+ ", carVin=" + carVin + "]";
+		return "Offer is [" + offerStatus + "] with a total of " + moneyAmount + " from [" + ownerUsername +
+				"] for the car with a VIN number of [" + carVin + "]";
+		//return "Offer [offerStatus=" + offerStatus + ", moneyAmount=" + moneyAmount + ", ownerUsername=" + ownerUsername
+				//+ ", carVin=" + carVin + "]";
 	}
 }

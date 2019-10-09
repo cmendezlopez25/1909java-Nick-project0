@@ -111,7 +111,15 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Car [vin=" + vin + ", model=" + model + ", year=" + year + ", ownerUsername=" + ownerUsername
-				+ ", basePrice=" + basePrice + "]";
+		String ret = null;
+		if (ownerUsername == null) {
+			ret = "A " + model + " from " + year + " with a base price of " + basePrice;
+		}
+		else {
+			ret = "A " + model + " from " + year + " owned by [" + ownerUsername + "] with a base price of " + basePrice;
+		}
+		return ret;
+		//return "Car [vin=" + vin + ", model=" + model + ", year=" + year + ", ownerUsername=" + ownerUsername
+				//+ ", basePrice=" + basePrice + "]";
 	}
 }

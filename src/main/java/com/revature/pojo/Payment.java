@@ -129,8 +129,10 @@ public class Payment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Payment [startingPayment=" + startingPayment + ", monthlyPayment=" + monthlyPayment
-				+ ", remainingPayment=" + remainingPayment + ", months=" + months + ", ownerUsername=" + ownerUsername
-				+ ", carVin=" + carVin + "]";
+		return "Payment for [" + ownerUsername + "] has a remaining payment of " + remainingPayment + " over " + months +
+				" months for the car with a VIN of [" + carVin + "]";
+		//return "Payment [startingPayment=" + startingPayment + ", monthlyPayment=" + monthlyPayment
+				//+ ", remainingPayment=" + remainingPayment + ", months=" + months + ", ownerUsername=" + ownerUsername
+				//+ ", carVin=" + carVin + "]";
 	}
 }

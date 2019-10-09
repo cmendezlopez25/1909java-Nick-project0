@@ -34,6 +34,7 @@ public class CustomerMenuImpl implements CustomerMenu {
 		
 		currentUser = menuSystem.getUser();
 
+		sysout.println();
 		sysout.println("Welcome back, " + currentUser.getName() + "!");
 		sysout.println("1. View your owned cars.");
 		sysout.println("2. View your remaining payments.");

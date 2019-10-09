@@ -18,6 +18,7 @@ public class MainMenuImpl implements MainMenu {
 	public Menu display() {
 		log.trace("Inside Main Menu");
 
+		sysout.println();
 		sysout.println("Welcome to Cars Incorporated! We have cars, you do too!");
 		sysout.println("For customers or employees, press 1");
 		sysout.println("For new users looking to register, press 2");

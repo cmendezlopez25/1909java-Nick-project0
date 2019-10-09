@@ -33,7 +33,9 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		}
 		
 		currentUser = menuSystem.getUser();
-		
+
+		sysout.println();
+		sysout.println();
 		sysout.println("Welcome back, " + currentUser.getName() + "!");
 		sysout.println("1. View the car lot.");
 		sysout.println("2. View all pending offers.");
@@ -116,7 +118,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 			for (int i = 0; i < offerList.size(); ++i) {
 				sysout.println((i+1) + ". " + offerList.get(i).toString());
 			}
-			sysout.println("Select an offer to accept or reject, or press c to cancel.");
+			sysout.println("Select an offer to accept or reject, or press [c] to cancel.");
 			validOfferInput();
 		}
 		
@@ -148,7 +150,7 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 		
 		if (!input.toLowerCase().equals("c")) {
 			Offer offer = offerList.get(Integer.parseInt(input) -1);
-			sysout.println("Press a to accept or r to reject offer: " + offer);
+			sysout.println("Press [a] to accept or [r] to reject offer: " + offer);
 			acceptRejectOffer(offer);
 		}
 		
@@ -164,11 +166,11 @@ public class EmployeeMenuImpl implements EmployeeMenu {
 			
 			if (input.toLowerCase().equals("a")) {
 				offerService.acceptOffer(offer);
-				sysout.println("Accepted " + offer);
+				sysout.println("Accepted offer from [" + offer.getOwnerUsername() + "] for [" + offer.getCarVin() + "]");
 			}
 			else if (input.toLowerCase().equals("r")) {
 				offerService.rejectOffer(offer);
-				sysout.println("Rejected " + offer);
+				sysout.println("Rejected offer from [" + offer.getOwnerUsername() + "] for [" + offer.getCarVin() + "]");
 			}
 			else {
 				input = "-1";

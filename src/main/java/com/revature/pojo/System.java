@@ -139,6 +139,17 @@ public class System {
 		return carList;
 	}
 
+	public boolean doesVinExist(String vin) {
+		if (getLot().getCars() != null) {
+			for (Car c : getLot().getCars()) {
+				if (c.getVin().equals(vin)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public void addPayment(Payment p) {
 		getPayments().add(p);
 		paymentSerializer.addPayment(p);
@@ -157,7 +168,7 @@ public class System {
 		}
 		return paymentList;
 	}
-	
+
 	public void makePayment(Payment p) {
 		p.setRemainingPayment(p.getRemainingPayment() - p.getMonthlyPayment());
 		p.setMonths(p.getMonths() - 1);
@@ -176,7 +187,7 @@ public class System {
 
 		return false;
 	}
-	
+
 	public void removeOffersOfVin(String vin) {
 		List<Offer> offerList = getOffers();
 		for (int i = 0; i < offerList.size(); ++i) {
@@ -197,7 +208,8 @@ public class System {
 			o.setCarVin(c.getVin());
 			lotSerializer.updateCarOwner(c);
 			offerSerializer.updateOffer(o);
-			addPayment(new Payment(o.getMoneyAmount(), calculateMonthlyPayment(o.getMoneyAmount(), months), o.getMoneyAmount(), months, o.getOwnerUsername(), c.getVin()));
+			addPayment(new Payment(o.getMoneyAmount(), calculateMonthlyPayment(o.getMoneyAmount(), months),
+					o.getMoneyAmount(), months, o.getOwnerUsername(), c.getVin()));
 
 			rejectAllOffersOfVin(offer.getCarVin());
 		}

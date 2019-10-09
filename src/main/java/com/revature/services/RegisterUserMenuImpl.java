@@ -17,6 +17,7 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 	// singleton
 	public static final RegisterUserMenuImpl registerMenu = new RegisterUserMenuImpl();
 	private UserDAO userSerializer = new UserDAOPostgres();
+	private boolean isExitMenuPrompt = false;
 
 	private RegisterUserMenuImpl() {
 		log.trace("Creating Register User menu");
@@ -26,29 +27,13 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 	public Menu display() {
 		log.trace("Entering Register User menu");
 
-		sysout.println("Register as a new user.");
-		User user = new User();
-		boolean usernameExist = doesUsernameExist(user);
-		if (usernameExist) {
-			sysout.println("Already existing username. Would you like to return to the Main Menu? y or n");
-			boolean isValidInput = !isValidInput();
-			while (isValidInput) {
-				isValidInput = !isValidInput();
-			}
-			usernameExist = isValidInput;
-		}
-		else {
-			sysout.println("Enter your full name");
-			user.setName(SystemUtil.nextLine());
-			sysout.println("Enter your password");
-			user.setPassword(SystemUtil.nextLine());
-			sysout.println("User creation is successful! Enjoy your new account!");
-			user.setAccessLevel(AccessLevel.CUSTOMER);
-			userSerializer.CreateUser(user);
-			System.menuSystem.setUser(user);
-			System.menuSystem.setCurrentMenu(CustomerMenuImpl.customerMenu);
-		}
+		isExitMenuPrompt = false;
 		
+		sysout.println();
+		sysout.println("Register as a new user.");
+		
+		enterUserInfo();
+
 		log.trace("Exiting Register User menu");
 		return System.menuSystem.getCurrentMenu();
 	}
@@ -57,22 +42,63 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 		log.trace("Entering doesUsernameExist()");
 		sysout.println("Enter your username.");
 		u.setUsername(SystemUtil.nextLine());
+		if (u.getUsername().isEmpty()) {
+			return true;
+		}
 		User user = userSerializer.ReadUserFile(u.getUsername());
 		log.trace("Exiting doesUsernameExist()");
 		return user != null;
 	}
 	
-	private boolean isValidInput() {
+	private void enterUserInfo() {
+		User user = new User();
+		boolean usernameExist = doesUsernameExist(user);
+		String input = null;
+		if (usernameExist) {
+			sysout.println("Unable to create user. Would you like to return to the Main Menu? [y] or [n]");
+			isExitMenuPrompt = true;
+			input = SystemUtil.nextLine();
+			while (!isValidInput(input)) {
+				input = SystemUtil.nextLine();
+			}
+		} else {
+			sysout.println("Enter your full name");
+			input = SystemUtil.nextLine();
+			while(!isValidInput(input)) {
+				input = SystemUtil.nextLine();
+			}
+			user.setName(input);
+			sysout.println("Enter your password");
+			input = SystemUtil.nextLine();
+			while(!isValidInput(input)) {
+				input = SystemUtil.nextLine();
+			}
+			user.setPassword(input);
+			sysout.println("User creation is successful! Enjoy your new account!");
+			user.setAccessLevel(AccessLevel.CUSTOMER);
+			userSerializer.CreateUser(user);
+			System.menuSystem.setUser(user);
+			System.menuSystem.setCurrentMenu(CustomerMenuImpl.customerMenu);
+		}
+	}
+
+	private boolean isValidInput(String input) {
 		log.trace("Entering isValidInput");
-		String input = SystemUtil.nextLine();
-		if (input.length() == 1) {
-			if (input.toLowerCase().charAt(0) == 'y') {
-				System.menuSystem.setCurrentMenu(MainMenuImpl.mainMenu);
-				log.trace("Exiting isValidInput");
-				return true;
-			} else if (input.toLowerCase().charAt(0) == 'n') {
-				System.menuSystem.setCurrentMenu(registerMenu);
-				log.trace("Exiting isValidInput");
+		if (isExitMenuPrompt) {
+			if (input.length() == 1) {
+				if (input.toLowerCase().charAt(0) == 'y') {
+					System.menuSystem.setCurrentMenu(MainMenuImpl.mainMenu);
+					log.trace("Exiting isValidInput");
+					return true;
+				} else if (input.toLowerCase().charAt(0) == 'n') {
+					System.menuSystem.setCurrentMenu(registerMenu);
+					log.trace("Exiting isValidInput");
+					return true;
+				}
+			}
+		}
+		else {
+			if (SystemUtil.isValidInput(input, false, null)) {
 				return true;
 			}
 		}
@@ -80,7 +106,7 @@ public class RegisterUserMenuImpl implements RegisterUserMenu {
 		log.trace("Exiting isValidInput");
 		return false;
 	}
-	
+
 	public void setUserDAOSerialization(UserDAOSerialization userSerializer) {
 		this.userSerializer = userSerializer;
 	}

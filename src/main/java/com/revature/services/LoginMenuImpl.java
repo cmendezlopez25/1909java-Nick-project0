@@ -26,6 +26,7 @@ public class LoginMenuImpl implements LoginMenu {
 	public Menu display() {
 		log.trace("Inside Login Menu");
 
+		sysout.println();
 		sysout.println("Enter your username: ");
 		String username = SystemUtil.nextLine();
 		sysout.println("Enter your password: ");
