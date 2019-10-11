@@ -85,13 +85,23 @@ public class OfferDAOPostgres implements OfferDAO {
 			throw new NullPointerException();
 		}
 		
-		String sql = "update " + schemaName + ".offer set offerstatus = ? where vin = ?";
+		String sql = "update " + schemaName + ".offer set offerstatus = ? where vin = ? and username = ? and price = ?";
 		
 		try {
+			conn.setSchema("project0");
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, offer.getOfferStatus().name());
 			stmt.setString(2, offer.getCarVin());
+			stmt.setString(3, offer.getOwnerUsername());
+			stmt.setDouble(4, offer.getMoneyAmount());
 			stmt.executeUpdate();
+			
+			if (offer.getOfferStatus() == OfferStatus.ACCEPTED) {
+				sql = "call reject_all_offers(?)";
+				PreparedStatement stmt2 = conn.prepareCall(sql);
+				stmt2.setString(1, offer.getCarVin());
+				stmt2.executeQuery();
+			}
 		} catch (SQLException e) {
 			log.error("Could not update offers!");
 			e.printStackTrace();

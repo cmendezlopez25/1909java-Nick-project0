@@ -219,7 +219,6 @@ public class System {
 		if (getOffers().contains(o)) {
 			Offer offer = getOffers().get(getOffers().indexOf(o));
 			offer.setOfferStatus(OfferStatus.REJECTED);
-			offerSerializer.updateOffer(offer);
 		}
 	}
 

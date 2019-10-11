@@ -28,18 +28,25 @@ import com.revature.util.ConnectionFactory;
 public class OfferDAOPostgresTest {
 	private OfferDAOPostgres offerDAO;
 	private Offer offer;
-	
+
 	@Mock
 	private Connection conn;
-	
+
 	@Spy
-	private PreparedStatement addStmt = ConnectionFactory.getConnection().prepareStatement("insert into test.offer(username, vin, price, offerstatus) values (?, ?, ?, ?)");
-	
+	private PreparedStatement addStmt = ConnectionFactory.getConnection()
+			.prepareStatement("insert into test.offer(username, vin, price, offerstatus) values (?, ?, ?, ?)");
+
 	@Spy
 	private PreparedStatement readStmt = ConnectionFactory.getConnection().prepareStatement("select * from test.offer");
-	
+
 	@Spy
-	private PreparedStatement updateStmt = ConnectionFactory.getConnection().prepareStatement("update test.offer set offerstatus = ? where vin = ?");
+	private PreparedStatement updateStmt;
+
+	{
+		Connection myConn = ConnectionFactory.getConnection();
+		myConn.setSchema("test");
+		updateStmt = myConn.prepareStatement("update test.offer set offerstatus = ? where vin = ?");
+	}
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -52,20 +59,20 @@ public class OfferDAOPostgresTest {
 	@Before
 	public void setUp() throws Exception {
 		offerDAO = new OfferDAOPostgres();
-		
+
 		offer = new Offer();
 		offer.setCarVin("12345678912345678");
 		offer.setOwnerUsername("human");
 		offer.setMoneyAmount(50000.00);
 		offer.setOfferStatus(OfferStatus.PENDING);
-		
+
 		offerDAO.setSchemaName("test");
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
 	@Test(expected = NullPointerException.class)
 	public void addOfferNull() {
 		offerDAO.addOffer(null);
@@ -74,9 +81,10 @@ public class OfferDAOPostgresTest {
 	@Test
 	public void addOfferPostgres() {
 		try {
-			when(conn.prepareStatement("insert into test.offer(username, vin, price, offerstatus) values (?, ?, ?, ?)")).thenReturn(addStmt);
+			when(conn.prepareStatement("insert into test.offer(username, vin, price, offerstatus) values (?, ?, ?, ?)"))
+					.thenReturn(addStmt);
 			offerDAO.setConnection(conn);
-			
+
 			offerDAO.addOffer(offer);
 			Mockito.verify(addStmt).executeUpdate();
 		} catch (SQLException e) {
@@ -89,32 +97,32 @@ public class OfferDAOPostgresTest {
 		try {
 			when(conn.prepareStatement("select * from test.offer")).thenReturn(readStmt);
 			offerDAO.setConnection(conn);
-			
+
 			offerDAO.ReadAllOffersFiles("offer");
 			Mockito.verify(readStmt).executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test(expected = NullPointerException.class)
 	public void updateOfferNull() {
 		offerDAO.updateOffer(null);
 	}
-	
+
 	@Test
 	public void updateOfferPostgres() {
 		try {
 			when(conn.prepareStatement("update test.offer set offerstatus = ? where vin = ?")).thenReturn(updateStmt);
 			offerDAO.setConnection(conn);
-			
+
 			offerDAO.updateOffer(offer);
 			Mockito.verify(updateStmt).executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public OfferDAOPostgresTest() throws SQLException {
 		super();
 	}
